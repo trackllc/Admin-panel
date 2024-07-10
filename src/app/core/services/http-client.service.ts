@@ -1,9 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, Observable } from 'rxjs';
-
-
 import { IRequestOptions } from '../../interfaces/request-options.interface';
 
 @Injectable({
@@ -30,7 +27,6 @@ export class HttpClientService {
     return this._http.get(url, { responseType: 'blob' });
   }
 
-
   public find<T>(url: string,
                  options?: IRequestOptions): Observable<T> {
     return this.get<T>(url, options);
@@ -42,7 +38,6 @@ export class HttpClientService {
     return this._http.post<T>(url, body);
   }
 
-  
   public put<T>(url: string, body: any, options?: IRequestOptions): Observable<T> {
     options = this._getDefaultOptions(options);
 
@@ -52,7 +47,6 @@ export class HttpClientService {
   public delete(url: string, options?: IRequestOptions): Observable<any> {
     return this._http.delete(url, options);
   }
-
 
   public upload<T>(url: string, formData: FormData): Observable<T> {
     const headers = new HttpHeaders();

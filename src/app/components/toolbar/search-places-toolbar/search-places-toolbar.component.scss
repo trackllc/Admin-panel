@@ -1,0 +1,124 @@
+::ng-deep {
+
+    .p-autocomplete-input {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    p-inputgroup.p-element.p-inputgroup.button {
+        width: 48px;
+    }
+
+    p-autocomplete.p-element.p-inputwrapper.c-hotel-search-toolbar_item.c-hotel-search-toolbar_flex-fill-button.p-inputwrapper-filled {
+        background-color: antiquewhite;
+        border-radius: 0;
+    }
+
+    .p-inputgroup-addon {
+        background: transparent;
+        color: #4F5A7C;
+    }
+
+    .p-inputgroup {
+        width: 650px;
+    }
+
+    .p-autocomplete.p-component.p-inputwrapper {
+        height: 100%;
+        width: 100%;
+    }
+
+    .p-component {
+        font-family: inherit;
+        font-feature-settings: var(--font-feature-settings, normal);
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    input.p-element.p-autocomplete-input.p-inputtext.p-component {
+        border-radius: 0;
+        height: 100%;
+        padding: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    p-autocomplete.p-element.p-inputwrapper.c-hotel-search-toolbar_item.c-hotel-search-toolbar_flex-fill-button.p-inputwrapper-filled {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .p-overlay-content {
+        position: fixed;
+        top: 122px;
+        margin-left: -52px;
+    }
+
+    .p-inputtext.p-component {
+        max-width: 400px !important;
+        padding: 6px;
+        border-radius: 0;
+    }
+
+    .p-autocomplete-panel {
+        background: var(--background-hex);
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07));
+        color: var(--foregraund-hex);
+        border: 0 none;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        width: 650px;
+        max-height: 280px !important;
+    }
+
+    .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+        margin: 0;
+        padding: 0.75rem 0.75rem;
+        border: 0 none;
+        color: #4b5563;
+        transition: box-shadow 0.2s;
+        border-radius: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .c-transfer-search-toolbar_item.c-transfer-search-toolbar_flex-fill-button {
+        border-radius: 4px;
+    }
+
+    .p-autocomplete-panel {
+        background: #ffffff;
+        color: #4b5563;
+        border: 0 none;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        padding: 2px;
+    }
+
+    .mat-icon-group {
+        vertical-align: middle;
+        margin-right: 4px;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 24px;
+    }
+
+    .p-inputgroup-addon {
+        background: transparent;
+        color: #4F5A7C;
+    }
+
+    .p-autocomplete__whitespace-nowrap {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 630px;
+    }
+
+    .p-inputtext:enabled:focus {
+        box-shadow: none;
+        border: none;
+    }
+}

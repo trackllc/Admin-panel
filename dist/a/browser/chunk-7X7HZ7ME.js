@@ -1,0 +1,2 @@
+import{Ab as o,Sb as r,Zb as c,la as a,zb as i}from"./chunk-4X7OEXOC.js";var d=(()=>{let e=class e{ngAfterViewInit(){}ngOnDestroy(){}ngOnInit(){}};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=a({type:e,selectors:[["app-search-places"]],standalone:!0,features:[c],decls:2,vars:0,consts:[[1,"page_content-wrapper"]],template:function(n,p){n&1&&(i(0,"div",0),r(1,` Search Places
+`),o())},changeDetection:0});let t=e;return t})();export{d as a};

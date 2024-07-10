@@ -1,21 +1,127 @@
 <div class="c-map">
-    <div class="c-map-toolbar-horizontal">
-    </div>
-    <div class="c-map-toolbar-vertical"></div>
-    <div class="c-map-toolbar-horizontal c-map-toolbar-horizontal__bottom" >
-        <div class="flex-fill"></div>
+  <div class="c-map-toolbar-horizontal">
+    <div class="flex-fill"></div>
+
+    <div class="flex-fill"></div>
+    <mapbox-fullscreen-control></mapbox-fullscreen-control>
+  </div>
+
+  <div class="c-map-toolbar-vertical">
+    <div class="flex-fill"></div>
+    <mapbox-zoom-control></mapbox-zoom-control>
+
+    <mapbox-geolocation-control class="c-map__y-offset"></mapbox-geolocation-control>
+    <div class="flex-fill"></div>
+
+  </div>
+
+  <div class="c-map-toolbar-horizontal c-map-toolbar-horizontal__bottom">
+
+  </div>
+
+  <mapbox-map (load)="load()" (mapClick)="click($event)" (mapRightclick)="dblclick($event)">
+
+    <app-mapbox-geojson-source
+    *ngIf="dataCluster" id="earthquakes" 
+    [data]="dataCluster" 
+    [cluster]="true" [clusterMaxZoom]="14"
+     [clusterRadius]="50">
+
+     <app-mapbox-layer *ngIf="dataCluster"
+     id="clusters"
+     type="circle"
+     source="earthquakes"
+     [filter]="['has', 'point_count']"
+     [paint]="{
+       'circle-color': {
+           property: 'point_count',
+           type: 'interval',
+           stops: [
+               [0, '#1C2135'],
+               [100, '#5A6794'],
+               [750, '#8794C0']
+           ]
+       },
+       'circle-radius': {
+           property: 'point_count',
+           type: 'interval',
+           stops: [
+               [0, 18],
+               [100, 20],
+               [750, 22]
+           ]
+       }
+     }"
+     ></app-mapbox-layer>
+
+     <app-mapbox-layer *ngIf="dataCluster"
+     id="cluster-count"
+     type="symbol"
+     source="earthquakes"
+     [filter]="['has', 'point_count']"
+     [paint]="{
+      'text-color': '#fff',
+    }"
+     [layout]="{
+       'text-field': '{point_count_abbreviated}',
+       'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+       'text-size': 12,
+
+     }"
+     ></app-mapbox-layer>
+
+     <app-mapbox-layer *ngIf="dataCluster"
+     id="unclustered-point"
+     type="circle"
+     source="earthquakes"
+     [filter]="['!has', 'point_count']"
+     [paint]="{
+       'circle-color': '#8794C0',
+       'circle-radius': 4,
+       'circle-stroke-width': 1,
+       'circle-stroke-color': '#fff',
+       'text-color': '#fff',
+     }"
+     ></app-mapbox-layer>
+   </app-mapbox-geojson-source>
+
+   <ng-container *ngIf="dataMarkers">
+    <app-mapbox-marker  *ngFor="let feature of dataMarkers?.features" (markerClick)="markerClick(feature)"
+      [feature]="feature">
+      <div class="marker" [ngStyle]="{
+          'background-image': 'url(./assets/img/marker-pin.svg)',
+          'background-size': 'cover',
+           width: '24px',
+           height: '36px',
+          cursor: 'pointer'
+        }">
       </div>
+    </app-mapbox-marker>
+  </ng-container>
+    <app-mapbox-popup *ngIf="dataMarkers" [lngLat]="[74.864155, 42.889409]" [closeOnClick]="false" (popupOpen)="popupOpen()">
+      <h2 style="margin-bottom:0">Track LLC</h2>
+    </app-mapbox-popup>
 
-       <mgl-map (load)="load()" (mapClick)="click()" (mapDblclick)="dblclick()" >
+    <app-mapbox-geojson-source *ngIf="dataRoutes" id="trace" [data]="dataRoutes">
+      <app-mapbox-layer *ngIf="dataRoutes" id="trace" type="line" source="trace" [paint]="{
+        'line-color': '#1C2135',
+        'line-opacity': 0.75,
+        'line-width': 3
+      }">
+      </app-mapbox-layer>
+    </app-mapbox-geojson-source>
 
-</mgl-map>
-      <!-- <google-map  height="100%" width="100%">
+  </mapbox-map>
 
-</google-map> -->
+  <div [style.position]="'fixed'" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu" [matMenuTriggerData]="{ item: contextMenu }">
+  </div>
 
+  <mat-menu #contextMenu="matMenu" [overlapTrigger]="true">
+    <ng-template matMenuContent let-item="item">
+      <button mat-menu-item>Что здесь?</button>
+      <button mat-menu-item> Проложите маршрут отсюда?</button>
+      <button mat-menu-item> Проложите маршрут сюда?</button>
+    </ng-template>
+  </mat-menu>
 </div>
-   
-
-
-
-

@@ -1,3 +1,19 @@
+::ng-deep {
+.needed-element .mat-pseudo-checkbox {
+  display: none !important;
+}
+
+.mat-button-toggle .mat-pseudo-checkbox {
+  /* margin-right: 12px; */
+  display: none;
+}
+
+.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+  color: transparent;
+  background-color: transparent !important;
+}
+
+}
 .c-map {
     width: 100%;
     height: 100%;
@@ -38,7 +54,7 @@
       right: 0;
       width: 72px;
       height: 100%;
-      padding: 72px 16px 16px 16px;
+      padding: 16px 16px 16px 16px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -91,7 +107,7 @@
         transition: all 120ms ease-in-out;
   
         &:hover {
-          border-color: var(--primary-hex);
+          border-color: rgba(var(--textAccent-rgb), 0.28);
         }
       }
   

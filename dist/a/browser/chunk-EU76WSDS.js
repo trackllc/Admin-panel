@@ -1,0 +1,2 @@
+import{Ab as a,Sb as r,Zb as c,la as o,zb as i}from"./chunk-4X7OEXOC.js";var f=(()=>{let e=class e{ngAfterViewInit(){}ngOnDestroy(){}ngOnInit(){}};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["app-planner"]],standalone:!0,features:[c],decls:2,vars:0,consts:[[1,"page_content-wrapper"]],template:function(n,s){n&1&&(i(0,"div",0),r(1,` Route
+`),a())},changeDetection:0});let t=e;return t})();export{f as a};

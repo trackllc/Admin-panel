@@ -1,0 +1,207 @@
+::ng-deep {
+
+  .p-autocomplete-input {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  p-inputgroup.p-element.p-inputgroup.button {
+    width: 48px;
+  }
+
+  p-autocomplete.p-element.p-inputwrapper.c-hotel-search-toolbar_item.c-hotel-search-toolbar_flex-fill-button.p-inputwrapper-filled {
+    background-color: antiquewhite;
+    border-radius: 0;
+  }
+
+  .p-inputgroup-addon {
+    background: transparent;
+    color: #4F5A7C;
+  }
+
+  .p-inputgroup {
+    width: 300px;
+  }
+
+  .p-autocomplete.p-component.p-inputwrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  input.p-element.p-autocomplete-input.p-inputtext.p-component {
+    border-radius: 0;
+    height: 100%;
+    padding: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .p-component {
+    font-family: inherit;
+    font-feature-settings: var(--font-feature-settings, normal);
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  p-autocomplete.p-element.p-inputwrapper.c-hotel-search-toolbar_item.c-hotel-search-toolbar_flex-fill-button.p-inputwrapper-filled {
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  .p-autocomplete-panel.p-component {
+    max-height: max-content !important;
+  }
+
+  input.p-element.p-autocomplete-input.p-inputtext.p-component {
+    border-radius: 0;
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    margin: 0;
+    padding: 0.75rem  0.75rem;
+    border: 0 none;
+    color: #4b5563;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .p-autocomplete__whitespace-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 244px;
+  }
+
+  .c-transfer-search-toolbar_item.c-transfer-search-toolbar_flex-fill-button {
+    border-radius: 4px;
+  }
+
+  .p-inputtext.p-component {
+    max-width: 200px;
+    padding: 6px;
+    border-radius: 0;
+  }
+
+  .p-autocomplete-panel {
+    background: var(--background-hex);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, .07), rgba(255, 255, 255, .07));
+    color: var(--foregraund-hex);
+    border: 0 none;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+    margin-top: 5px;
+    border-radius: 4px;
+    width: 300px;
+  }
+
+  .p-overlay-content {
+    position: fixed;
+    top: 117px;
+    margin-left: -54px;
+  }
+
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item-group {
+    margin: 0;
+    padding: 0.75rem 0.75rem;
+    color: #4F5A7C;
+    background: #ffffff;
+    font-weight: 700;
+  }
+
+  .mat-icon-group {
+    vertical-align: middle;
+    margin-right: 4px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 24px;
+  }
+
+  .p-inputgroup-addon {
+    background: transparent;
+    color: #4F5A7C;
+    // border-top: 1px solid #d1d5db;
+    // border-left: 1px solid #d1d5db;
+    // border-bottom: 1px solid #d1d5db;
+    // padding: 0.75rem 0.75rem;
+    // min-width: 3rem;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none;
+    border: none;
+  }
+
+  // .p-autocomplete-loader {
+  //     color: #c9bebc;
+  // }
+
+  // .p-autocomplete-panel {
+  //     width: calc(100% + 41px) !important;
+  // }
+
+  // .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+  //     margin: 0;
+  //     padding: 0.75rem 1.25rem;
+  //     border: 0 none;
+  //     color: #4b5563;
+  //     background: transparent;
+  //     transition: box-shadow 0.2s;
+  //     border-radius: 0;
+  // }
+
+  // .p-autocomplete-empty-message {
+  //     margin: 0;
+  //     padding: 0.75rem 1.25rem;
+  //     border: 0 none;
+  //     color: #4b5563;
+  //     background: transparent;
+  //     transition: box-shadow 0.2s;
+  //     border-radius: 0;
+  // }
+}
+
+
+
+// ::ng-deep {
+// .mat-mdc-icon-button .mat-mdc-button-touch-target {
+//     position: absolute;
+//     top: 50%;
+//     height: 60px;
+//     left: 50%;
+//     width: 60px;
+//     transform: translate(-50%, -50%);
+//     display: var(--mat-icon-button-touch-target-display);
+// }
+
+// }
+
+.c-search-navigation-toolbar {
+  padding: 16px 24px 0 24px;
+}
+
+.c-search-navigation-toolbar_item {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  color: var(--textAccent-hex);
+
+  &:not(:last-of-type) {
+    margin-right: 16px;
+  }
+
+  &.__is-active {
+    color: var(--primary-hex);
+    background-color: rgba(var(--foregraund-rgb), 0.04);
+  }
+
+}

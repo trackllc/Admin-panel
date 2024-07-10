@@ -15,49 +15,45 @@ import {
     EventEmitter,
     inject,
 } from '@angular/core';
+import { SidebarModule } from 'primeng/sidebar';
 
 import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
-import mapboxgl from 'mapbox-gl';
-import { MapEventManager } from '../../services/map-event-manager';
+import mapboxgl, { MapboxOptions } from 'mapbox-gl';
+import { MapEventManager } from '../../map/services/map-event-manager';
+import { MapboxService } from '../../map/services/mapbox.service';
 
-interface MapboxMapsWindow extends Window {
-    gm_authFailure?: () => void;
-    mapbox?: typeof mapboxgl;
-}
 
 export const DEFAULT_HEIGHT = '100%';
 export const DEFAULT_WIDTH = '100%';
 
 @Component({
-    selector: 'mgl-map',
-    exportAs: 'mglMap',
+    selector: 'mapbox-map',
+    exportAs: 'MapboxMap',
     standalone: true,
+    imports: [SidebarModule],
     templateUrl: './mapbox-map.component.html',
     styleUrls: ['./mapbox-map.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class MglMap implements OnChanges, OnInit, OnDestroy {
+export class MapboxMap implements OnChanges, OnInit, OnDestroy {
+
     private _mapEl: HTMLElement;
     private _eventManager: MapEventManager = new MapEventManager(inject(NgZone));
-    public mglMap?: mapboxgl.Map;
-    private _isBrowser: boolean;
+    public mapboxMap?: mapboxgl.Map;
+    public _isBrowser: boolean;
+
     @Input() height: string = DEFAULT_HEIGHT;
     @Input() width: string = DEFAULT_WIDTH;
-    @Input() mapId: string | undefined;
+    @Input() bounds?: MapboxOptions['bounds'];
+    @Input() style: MapboxOptions['style'];
+    @Input() center?: MapboxOptions['center'];
+    @Input() maxBounds?: MapboxOptions['maxBounds'];
+    @Input() zoom?: MapboxOptions['zoom'];
+    @Input() bearing?: MapboxOptions['bearing'];
+    @Input() pitch?: MapboxOptions['pitch'];
 
-    @Input()
-    set center(center: mapboxgl.PointLike) {
-        this._center = center;
-    }
-    private _center: mapboxgl.PointLike;
-
-    @Input()
-    set zoom(zoom: number) {
-        this._zoom = zoom;
-    }
-    private _zoom: number;
 
     @Output() readonly mapInitialized: EventEmitter<any> =
         new EventEmitter<mapboxgl.Map>();
@@ -73,47 +69,59 @@ export class MglMap implements OnChanges, OnInit, OnDestroy {
     @Output() readonly mapDblclick: Observable<void> =
         this._eventManager.getLazyEmitter<void>('dblclick');
 
+    @Output() readonly mapRightclick: Observable<void> =
+        this._eventManager.getLazyEmitter<void>('contextmenu');
+
     constructor(
         private readonly _elementRef: ElementRef,
         private _ngZone: NgZone,
+        private _mapService: MapboxService,
         @Inject(PLATFORM_ID) platformId: Object,
     ) {
         this._isBrowser = isPlatformBrowser(platformId);
-        if (this._isBrowser) {
-            this.authFailure.emit();
-        }
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
-        if (changes['height'] || changes['width']) {
-            this._setSize();
-        }
-
-        const mglMap = this.mglMap;
-        if (mglMap) {
-
-        }
+    public ngOnChanges(changes: SimpleChanges): void {
+        changes['bounds'] && this.mapboxMap?.fitBounds(this.bounds!);
+        changes['center'] && this.mapboxMap?.setCenter(this.center!);
+        changes['zoom'] && this.mapboxMap?.setZoom(this.zoom!);
     }
 
-    public ngOnInit() {
-        if (this._isBrowser) {
-            this._mapEl = this._elementRef.nativeElement.querySelector('.map-container')!;
-            this._setSize();
-            if (mapboxgl.Map) {
-                this._initialize(mapboxgl.Map);
-            }
-        }
+    public ngOnInit(): void {
+        if (!this._isBrowser) return;
+        if (!mapboxgl.Map) return;
+        this._mapEl = this._elementRef.nativeElement.querySelector('.map-container')!;
+        this._setSize();
+        this._initialize();
     }
 
-    private _initialize(mapConstructor: typeof mapboxgl.Map) {
+    private _initialize(): void {
         this._ngZone.runOutsideAngular(() => {
             mapboxgl.accessToken = 'pk.eyJ1Ijoibm92YWthbmQiLCJhIjoiY2p3OXFlYnYwMDF3eTQxcW5qenZ2eGNoNCJ9.PTZDfrwxfMd-hAwzZjwPTg';
-            this.mglMap = new mapConstructor({ container: this._mapEl, zoom: 13, style: 'mapbox://styles/mapbox/navigation-day-v1', center: [-122.420679, 37.772537], trackResize: true });
-            this._eventManager.setTarget(this.mglMap);
-            this.mapInitialized.emit(this.mglMap);
-            this.mglMap.on('load', () => this.mglMap?.resize());
-
+            this.mapboxMap = new mapboxgl.Map(this._combineOptions());
+            this._mapService.load$.next(this.mapboxMap);
+            this._eventManager.setTarget(this.mapboxMap);
+            this.mapInitialized.emit(this.mapboxMap);
+            this.mapboxMap?.on('load', () => this.mapboxMap?.resize());
         });
+    }
+
+    private _combineOptions(): MapboxOptions {
+        return {
+            bounds: this.bounds,
+            style: this.style || 'mapbox://styles/mapbox/light-v11',
+            center: this.center,
+            maxBounds: this.maxBounds,
+            zoom: this.zoom || 0,
+            bearing: this.bearing || 0,
+            pitch: this.pitch || 0,
+            container: this._mapEl,
+            minZoom: 2,
+            maxZoom: 22,
+            trackResize: true,
+            /* @ts-ignore */
+            projection: 'mercator'
+        };
     }
 
     public ngOnDestroy(): void {
@@ -123,7 +131,7 @@ export class MglMap implements OnChanges, OnInit, OnDestroy {
 
     public getZoom(): number {
         this._assertInitialized();
-        return this.mglMap.getZoom();
+        return this.mapboxMap?.getZoom()!;
     }
 
     private _setSize(): void {
@@ -136,7 +144,7 @@ export class MglMap implements OnChanges, OnInit, OnDestroy {
     }
 
     private _assertInitialized(): asserts this is { mglMap: mapboxgl.Map } {
-        if (!this.mglMap) {
+        if (!this.mapboxMap) {
             throw Error(
                 'Cannot access Mapbox information before the API has been initialized. ' +
                 'Please wait for the API to load before trying to interact with it.',
@@ -147,8 +155,6 @@ export class MglMap implements OnChanges, OnInit, OnDestroy {
 
 const cssUnitsPattern = /([A-Za-z%]+)$/;
 function coerceCssPixelValue(value: any): string {
-    if (value == null) {
-        return '';
-    }
+    if (value == null) return '';
     return cssUnitsPattern.test(value) ? value : `${value}px`;
 }

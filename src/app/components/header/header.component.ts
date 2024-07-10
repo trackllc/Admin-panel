@@ -11,7 +11,7 @@ import { UserService } from '../../core/services/user.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
-    selector: 'appheader',
+    selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
@@ -29,19 +29,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     @Input() public title: string | undefined;
     @Input() public logotypeUrl: string | undefined;
-   
+
     public userName: string | undefined;
     public inProcess: boolean | undefined;
-    
+
     private _destroy$ = new Subject<boolean>();
 
     constructor(
         private _authService: AuthenticationService,
         private _userService: UserService,
     ) {
+        this._watchForUserChanges();
     }
 
-    public ngOnInit(): void {
+    public ngOnInit(): void { }
+
+    public ngOnDestroy(): void {
+        this._destroy$.next(true);
+        this._destroy$.complete();
+    }
+
+    public onLogout(): void {
+        this._authService.logout();
+    }
+
+    private _watchForUserChanges() {
         combineLatest([this._authService.isAuth$, this._userService.getUser()])
             .pipe(
                 takeUntil(this._destroy$))
@@ -50,17 +62,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             });
     }
 
-    public ngOnDestroy(): void {
-        this._destroy$.next(true);
-        this._destroy$.complete();
-    }
-
-    public onLogout(): void {
-      this._authService.logout();
-    }
-
     private _initUserData(isAuth: boolean, user: any): void {
-        this.userName = isAuth ? 'Name' : undefined;
+        this.userName = isAuth ? user.email : undefined;
 
     }
 }

@@ -2,7 +2,7 @@ import { NgIf, NgClass, NgFor, NgSwitch, CommonModule, isPlatformBrowser } from 
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation, ViewRef } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -29,11 +29,12 @@ import { DocumentsComponent } from './components/ documents/documents.component
 import { TrackingToolbarComponent } from './components/toolbar/tracking-toolbar/tracking-toolbar.component';
 import { RoutePlannerToolbarComponent } from './components/toolbar/route-planner-toolbar/route-planner-toolbar.component';
 import { LogisticsToolbarComponent } from './components/toolbar/logistics-toolbar/logistics-toolbar.component';
+import { SarchPlacesToolbarComponent } from './components/toolbar/search-places-toolbar/search-places-toolbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NgIf, AsyncPipe, MatMenuModule, MatIconModule, NgClass, MatProgressBar, MatTooltip, NgFor, MatToolbar, MatButtonModule, SidebarNavComponent, HeaderComponent, ToolbarComponent, LoginComponent, FinanceComponent, DocumentsComponent,TrackingToolbarComponent,RoutePlannerToolbarComponent,LogisticsToolbarComponent],
+  imports: [CommonModule, RouterOutlet, NgIf, AsyncPipe, MatMenuModule, MatIconModule, NgClass, MatProgressBar, MatTooltip, NgFor, MatToolbar, MatButtonModule, SidebarNavComponent, HeaderComponent, ToolbarComponent, LoginComponent, FinanceComponent, DocumentsComponent, TrackingToolbarComponent, RoutePlannerToolbarComponent, LogisticsToolbarComponent, SarchPlacesToolbarComponent],
   providers: [StorageService, HttpClientService, NgSwitch, LoadPreloaderService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -46,6 +47,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   public showTrackingToolbar: boolean = false;
   public showRoutePlannerToolbar = false;
   public showLogisticsToolbar = false;
+  public showSearchPlacesToolbar = false;
   public tabletMode: boolean = true;
   public hasValidTokens = true;
   public sidebarNavActiveTab: string | undefined;
@@ -59,9 +61,10 @@ export class AppComponent implements AfterViewInit, OnInit {
   public showProgress: boolean = false;
 
   public isShow$ = this._authService.isAuth$;
-  private _isBrowser: boolean;
 
   public destroy$ = new Subject<boolean>();
+
+  private _isBrowser: boolean;
 
   constructor(
     public sidenavService: SidenavService,
@@ -84,13 +87,13 @@ export class AppComponent implements AfterViewInit, OnInit {
         this.showProgress = progress;
       });
 
-    // this._breakpointObserver.observe(['(max-width: 1100px)'])
-    //   .subscribe((state: BreakpointState) => {
-    //     this.tabletMode = state.matches;
-    //     if (this.tabletMode) {
-    //       this.sidebarNavViewMode = ViewMode.Expanded;
-    //     }
-    //   });
+    this._breakpointObserver.observe(['(max-width: 1100px)'])
+      .subscribe((state: BreakpointState) => {
+        this.tabletMode = state.matches;
+        if (this.tabletMode) {
+          this.sidebarNavViewMode = ViewMode.Expanded;
+        }
+      });
 
     this._router.events.
       pipe(
@@ -99,7 +102,6 @@ export class AppComponent implements AfterViewInit, OnInit {
       .subscribe(($event: any) => {
         this._showSearchControls();
         this._onRouteChanged($event);
-        console.log(this.showRoutePlannerToolbar,this.showTrackingToolbar)
       });
   }
 
@@ -115,6 +117,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.showRoutePlannerToolbar = this._router.url.indexOf('tools/route-planner') >= 0;
     this.showTrackingToolbar = this._router.url.indexOf('tools/tracking') >= 0;
     this.showLogisticsToolbar = this._router.url.indexOf('tools/logistics-map') >= 0;
+    this.showSearchPlacesToolbar = this._router.url.indexOf('tools/search-places') >= 0;
   }
 
   private _onRouteChanged($event: any): void {
@@ -136,6 +139,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   public toggleSidebarNavViewMode(): void {
     this.sidenavService.opened$.next(!this.sidenavService.opened$.value);
+    this._cdr.detectChanges();
     if (this.tabletMode) {
       this._cdr.detectChanges();
     } else {

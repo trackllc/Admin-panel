@@ -1,0 +1,16 @@
+<div class="c-map-toolbar-settings-control">
+    <mat-button-toggle-group class="c-map-button-toggle-group"
+                             *ngIf="isShowGeolocationControl"
+                             [disabled]="isDisableGeolocationControl"
+                             [vertical]="true"
+                             [(ngModel)]="isResetGeolocationControl">
+      <mat-button-toggle [matTooltip]="tooltipSettings"
+                         id="map-settings-toggle-button"
+                         matTooltipPosition="left"
+                         value="settings"
+                         (change)="onChange()">
+        <mat-icon id="map-settings-toggle-icon">near_me</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  

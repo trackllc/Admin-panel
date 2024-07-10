@@ -1,3 +1,49 @@
-<div>
-    Planner
+<div class="c-transfer-search-toolbar">
+  <div class="flex-row __justify-content-start">
+    <p-inputGroup>
+      <p-inputGroupAddon>
+        <mat-icon class="mat-icon mat-icon-group">location_on</mat-icon>
+      </p-inputGroupAddon>
+      <p-autoComplete [group]="false" [field]="'place_name'" dataKey="id"
+        [showClear]="true" [delay]="500" [forceSelection]="true" [dropdown]="false" [multiple]="false"
+        [autoHighlight]="false" [suggestions]="searchData$ | async" [emptyMessage]="'Нет результатов поиска'"
+        (completeMethod)="onSearch($event)" placeholder="Откуда" title="hello">
+        <ng-template let-group pTemplate="item">
+          <div class="flex align-items-center">
+            <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] == 'poi'">{{
+              getIcon(group.properties.category) }}</mat-icon>
+            <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] !== 'poi'">location_on</mat-icon>
+            <span class="p-autocomplete__whitespace-nowrap">{{group.place_name}}</span>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </p-inputGroup>
+    <mat-divider [vertical]="true"></mat-divider>
+    <p-inputGroup class="button">
+      <p-inputGroupAddon>
+        <mat-icon class="mat-icon mat-icon-group">swap_horiz</mat-icon>
+      </p-inputGroupAddon>
+    </p-inputGroup>
+    <mat-divider [vertical]="true"></mat-divider>
+    <p-inputGroup>
+      <p-inputGroupAddon>
+        <mat-icon class="mat-icon mat-icon-group">location_on</mat-icon>
+      </p-inputGroupAddon>
+      <p-autoComplete [group]="false" [field]="'place_name'" dataKey="id"
+        [showClear]="true" [delay]="500" [forceSelection]="true" [dropdown]="false" [multiple]="false"
+        [autoHighlight]="false" [suggestions]="searchData$ | async" [emptyMessage]="'Нет результатов поиска'"
+        (completeMethod)="onSearch($event)" placeholder="Куда" title="hello">
+        <ng-template let-group pTemplate="item">
+          <div class="flex align-items-center">
+            <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] == 'poi'">{{
+              getIcon(group.properties.category) }}</mat-icon>
+            <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] !== 'poi'">location_on</mat-icon>
+            <span class="p-autocomplete__whitespace-nowrap">{{group.place_name}}</span>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </p-inputGroup>
+    <mat-divider [vertical]="true"></mat-divider>
+
+  </div>
 </div>

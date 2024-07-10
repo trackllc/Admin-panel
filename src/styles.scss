@@ -1,4 +1,16 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+/* icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
 @import "./assets/css/theme.scss";
+
+
+
 
 .mat-mdc-menu-panel {
   background-color: #fcfcfc !important;
@@ -44,7 +56,7 @@
     right: 0;
     width: 72px;
     height: 100%;
-    padding: 72px 16px 16px 16px;
+    padding: 16px 16px 16px 16px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -97,7 +109,7 @@
       transition: all 120ms ease-in-out;
 
       &:hover {
-        border-color: var(--primary-hex);
+        border-color: rgba(var(--textAccent-rgb), 0.28);
       }
     }
 
@@ -199,7 +211,7 @@
   }
 
   .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled) {
-    color: #465275;
+    color: rgba(var(--textAccent-rgb), 0.28);
   }
 }
 

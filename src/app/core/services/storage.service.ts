@@ -88,6 +88,14 @@ export class StorageService {
                 settingIsReadonly: false,
                 isShow: true,
                 id: 1
+            },
+            {
+                settingCode: 'search-places',
+                settingName: 'Поиск на карте',
+                settingIsForSearchAndBook: true,
+                settingIsReadonly: false,
+                isShow: true,
+                id: 1
             }]);
         this.setting$.subscribe((setting) => {
             this._initUiSettings(setting);

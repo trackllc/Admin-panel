@@ -1,3 +1,17 @@
-<div>
-    Tracking
+<div class="c-transfer-search-toolbar">
+    <div class="flex-row __justify-content-start">
+        <p-inputGroup>
+            <p-inputGroupAddon>
+                <mat-icon class="mat-icon mat-icon-group">search</mat-icon>
+            </p-inputGroupAddon>
+            <p-autoComplete class="c-hotel-search-toolbar_item c-hotel-search-toolbar_flex-fill-button" [group]="false"
+                [field]="'place_name'" [suggestions]="itemsTaxon$ | async" [delay]="500" [forceSelection]="true"
+                dataKey="id" [dropdown]="false" [multiple]="false" [showClear]="true" [autoHighlight]="false"
+                [emptyMessage]="'Нет результатов поиска'" (completeMethod)="onSearch($event)"
+                placeholder="Номер заказа">
+            </p-autoComplete>
+        </p-inputGroup>
+        <mat-divider [vertical]="true"></mat-divider>
+
+    </div>
 </div>

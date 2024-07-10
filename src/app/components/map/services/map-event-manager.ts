@@ -9,6 +9,7 @@ export class MapEventManager {
     private _pending: { observable: Observable<any>; observer: Subscriber<any> }[] = [];
     private _listeners: any[] = [];
     private _targetStream = new BehaviorSubject<any>(undefined);
+    private _isHtmlElement = false;
 
     constructor(
         private _ngZone: NgZone
@@ -36,7 +37,7 @@ export class MapEventManager {
                         this._ngZone.run(() => observer.next(event));
                     }
 
-                    target.on(name, listener);
+                    this._isHtmlElement ? target.getElement().addEventListener(name, listener) : target.on(name, listener);
 
                     if (!listener) {
                         observer.complete();
@@ -52,7 +53,9 @@ export class MapEventManager {
         );
     }
 
-    public setTarget(target: any): void {
+    public setTarget(target: any, isHtmlElement?: boolean): void {
+
+        this._isHtmlElement = isHtmlElement!;
         const currentTarget = this._targetStream.value;
 
         if (target === currentTarget) {

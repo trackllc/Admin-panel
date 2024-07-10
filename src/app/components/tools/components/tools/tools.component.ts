@@ -15,6 +15,7 @@ import { SidenavService } from '../../../../core/services/sidenav.service';
 import { TrackingComponent } from '../tracking/tracking.component';
 import { PlannerComponent } from '../route-planner/route-planner.component';
 import { LogistcicsComponent } from '../logistics-map/logistics-map.component';
+import { SearchPlacesComponent } from '../search-places/search-places.component';
 
 // enums
 // import { LocationType, PointType } from '@components/search/transfer/enums';
@@ -74,7 +75,8 @@ import { LogistcicsComponent } from '../logistics-map/logistics-map.component';
         MapComponent,
         TrackingComponent,
         PlannerComponent,
-        LogistcicsComponent
+        LogistcicsComponent,
+        SearchPlacesComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

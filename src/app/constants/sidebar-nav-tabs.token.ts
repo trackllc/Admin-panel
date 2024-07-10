@@ -65,11 +65,11 @@ export const sidebarNavTabsConst: ISidebarNavTab[] = [
     disabled: false,
   },
   {
-    name: 'bookings',
-    label: 'Bookings',
-    icon: 'insert_drive_file',
+    name: 'search-places',
+    label: 'Поиск мест',
+    icon: 'travel_explore',
     type: 'link',
-    url: 'bookings',
+    url: 'tools/search-places',
     disabled: false,
-  }
+  },
 ];

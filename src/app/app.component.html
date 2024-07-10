@@ -8,8 +8,8 @@
   <div class="row no-gutters page_header-box">
     <div class="col-12 no-gutters">
 
-      <appheader [logotypeUrl]="logoUrl">
-      </appheader>
+      <app-header [logotypeUrl]="logoUrl">
+      </app-header>
 
       <mat-toolbar class="header-toolbar">
         <div class="header-toolbar_toggle-sidebar-nav-view-mode-button">
@@ -23,16 +23,18 @@
               <mat-icon *ngIf="sidenavService.opened$.value">close</mat-icon>
             </ng-container>
           </button>
+          
         </div>
 
         <!-- <div class="header-toolbar_search-back">
         </div> -->
 
         <div class="header-toolbar_search-toolbar-container">
-          <div class="header-toolbar_search-toolbar-wrapper">
+          <div class="header-toolbar_search-toolbar-wrapper"[ngClass]="{ 'open': !sidenavService.opened$.value }">
             <app-route-planner-toolbar *ngIf="showRoutePlannerToolbar"></app-route-planner-toolbar>
             <app-tracking-toolbar *ngIf="showTrackingToolbar"></app-tracking-toolbar>
             <app-logistics-toolbar *ngIf="showLogisticsToolbar"></app-logistics-toolbar>
+            <app-search-places-toolbar *ngIf="showSearchPlacesToolbar"></app-search-places-toolbar>
           </div>
         </div>
 

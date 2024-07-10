@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { throwError } from 'rxjs';
 
 @Component({
     selector: 'app-login',
@@ -38,18 +39,20 @@ export class LoginComponent implements OnInit {
 
     public ngOnInit(): void {
         this.loginForm = new FormGroup({
-            email: new FormControl('test@mail.kz', [Validators.required, Validators.email, Validators.minLength(6)]),
+            email: new FormControl('africa@mail.kg', [Validators.required, Validators.email, Validators.minLength(6)]),
             password: new FormControl('Password1', [Validators.required, Validators.minLength(3)])
         })
     }
 
     public onSubmit() {
-        if (this.loginForm.invalid) {
-            return;
-        }
+        if (this.loginForm.invalid) return;
+
         this._authService.login(this.loginForm.value)
             .pipe(
-                map(token => token && this._router.navigate(['board']))
+                tap(token => token && this._router.navigate(['board'])),
+                catchError((error) => {
+                    return throwError(() => new Error('Error refreshing access token:'));
+                  })
 
             ).subscribe();
     }

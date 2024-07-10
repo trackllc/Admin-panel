@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-// import { AutoCompleteCompleteEvent } from 'primeng/autocomplete/autocomplete.interface';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
 import { MapSearchService } from '../../map/services/map-search.service';
@@ -8,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { SidenavService } from '../../../core/services/sidenav.service';
+import { PlaceIconsType } from '../../mapbox/enums/place-icons-type.enum';
 
 @Component({
     selector: 'app-logistics-toolbar',
@@ -20,11 +21,12 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 })
 export class LogisticsToolbarComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    public itemsTaxon$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+    public searchData$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
     constructor(
         public searchService: MapSearchService,
         public cdr: ChangeDetectorRef,
+        public sidenavService: SidenavService,
     ) {
 
     }
@@ -35,9 +37,7 @@ export class LogisticsToolbarComponent implements AfterViewInit, OnDestroy, OnIn
     public ngOnDestroy(): void {
 
     }
-    public ngOnInit(): void {
-
-    }
+    public ngOnInit(): void { }
 
     public onSearch(event: any) {
         let query = event.query;
@@ -46,9 +46,16 @@ export class LogisticsToolbarComponent implements AfterViewInit, OnDestroy, OnIn
 
         ).subscribe((data: any) => {
             console.log(data, 'data')
-            this.itemsTaxon$.next(data.features);
+            this.searchData$.next(data.features);
             this.cdr.detectChanges();
         });
+    }
+
+    public getIcon(type: any): string {
+        const placeType = type.split(' ')[0];
+        /* @ts-ignore */
+        const icon = PlaceIconsType[placeType] ? PlaceIconsType[placeType] : 'location_city';
+        return icon;
     }
 
 }

@@ -1,5 +1,20 @@
 
 
+::ng-deep{
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above {
+    color: #5A6794 !important;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+  .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+  .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
+  .mdc-notched-outline__trailing {
+  border-color: #5A6794 !important;
+}
+}
+
 :host ::ng-deep  {
     .mat-mdc-card {
     border-radius: 0;
@@ -8,6 +23,12 @@
     border-style: none;
     border-color: transparent;
     box-shadow: none;
+}
+
+.mat-mdc-card-header {
+  display: flex;
+  padding: 16px 16px 0;
+  justify-content: center;
 }
 
 .mat-mdc-unelevated-button[disabled], .mat-mdc-unelevated-button.mat-mdc-button-disabled {
@@ -104,7 +125,7 @@
         cursor: pointer;
   
         &:active {
-          color: #551A8B;
+          color: #5A6794;
         }
       }
     }

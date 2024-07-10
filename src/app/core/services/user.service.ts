@@ -14,7 +14,6 @@ export class UserService {
         private _tokenService: TokenService,
         private _jwtHelper: JwtHelperService,
     ) {
-       this.getUser().subscribe((data)=> console.log(data))
     }
 
     public getUser(): Observable<any> {

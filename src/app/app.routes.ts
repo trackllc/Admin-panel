@@ -6,6 +6,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { PageGuard } from './core/guards/page.guard';
 import { FinanceComponent } from './components/finance/finance.component';
 import { DocumentsComponent } from './components/ documents/documents.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {
         path: 'finance', component: FinanceComponent, canActivate: [AuthGuard]
     },
+    { path: 'error', component: ErrorPageComponent, canActivate: [AuthGuard] },
     { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
     {
         path: 'login',
@@ -48,6 +50,12 @@ export const routes: Routes = [
                 path: 'route-planner',
                 data: { sidenav: 'planner', sidenavContent: 'none' },
                 loadComponent: () => import('./components/tools/components/route-planner/route-planner.component').then((x) => x.PlannerComponent),
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'search-places',
+                data: { sidenav: 'places', sidenavContent: 'none' },
+                loadComponent: () => import('./components/tools/components/search-places/search-places.component').then((x) => x.SearchPlacesComponent),
                 canActivate: [AuthGuard]
             },
         ]

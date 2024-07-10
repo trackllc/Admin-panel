@@ -1,4 +1,4 @@
-<div class="cheader">
+<div class="c-header">
   <mat-toolbar class="c-header_toolbar">
     <a class="c-header_logo" href="./" *ngIf="logotypeUrl">
       <img [src]="logotypeUrl" [alt]="title" />
@@ -14,7 +14,7 @@
 <ng-template #userActions>
   <button mat-button class="mat-button mat-button-wrapper" [matMenuTriggerFor]="profileMenu" [disabled]="inProcess">
     <mat-icon>person</mat-icon>
-    <span class="mat-button-wrappe">Name</span>
+    <span class="mat-button-wrapper">{{userName}}</span>
   </button>
 </ng-template>
 
