@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapboxMap } from '../mapbox/mapbox-map/mapbox-map.component';
 import { SidenavService } from '../../core/services/sidenav.service';
-import { delay, Subject, takeUntil } from 'rxjs';
+import { delay, filter, Subject, takeUntil } from 'rxjs';
 import { MapSearchService } from './services/map-search.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -79,12 +79,15 @@ export class MapComponent implements OnDestroy, OnInit {
 
     public getRouteJson(): void {
         this._http.get<any>('https://api.track.bstrv.ru/v1/track')
-            .pipe(delay(10))
+            .pipe(
+                filter((data) => data?.features[0].geometry?.coordinates?.length > 0),
+                delay(100)
+            )
             .subscribe({
                 next: (data) => {
                     this.dataRoutes = data;
                     this.cdr.detectChanges();
-                    const coordinates = data.features[0].geometry.coordinates;
+                    const coordinates = data.features[0].geometry?.coordinates;
                     this.bounds = this.getBounds(coordinates);
                     this.cdr.detectChanges();
                 }
@@ -104,7 +107,7 @@ export class MapComponent implements OnDestroy, OnInit {
 
     public getBounds(coordinates: any): any {
         return coordinates?.reduce((bounds: any, coord: any) => {
-            return bounds.extend(<any>coord);
+            return bounds?.extend(<any>coord);
         }, new LngLatBounds(coordinates[0], coordinates[0]));
     }
 
