@@ -1,0 +1,19 @@
+button {
+    border: none;
+}
+
+::ng-deep {
+    &.mat-icon-button {
+        border: none;
+    }
+
+    .mat-button-wrapper>span {
+        vertical-align: super;
+        line-height: normal;
+        padding: 0 8px;
+    }
+
+    .mat-mdc-menu-item .mat-icon-no-color, .mat-mdc-menu-item .mat-mdc-menu-submenu-icon, .mat-mdc-menu-item-text {
+        color: #4F5A7C !important;
+    }
+}

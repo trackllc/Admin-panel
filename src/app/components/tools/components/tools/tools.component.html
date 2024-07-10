@@ -1,0 +1,53 @@
+<mat-sidenav-container class="c-search" autosize>
+    <mat-sidenav #sidenav class="c-search_sidenav"
+                 position="start"
+                 [mode]="tabletMode? 'over' : 'side'"
+                 [opened]="true"
+                 >
+      <div class="__flex-column __h-100">
+        <div class="__flex-none" *ngIf="showNavigation">
+        </div>
+        <div class="flex-fill">
+          <div class="c-search_sidenav-wrapper">
+            <ng-container [ngSwitch]="sidenavViewContent">
+              <ng-container *ngSwitchCase="'logistics'">
+                <app-logistics></app-logistics>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'tracking'">
+                 <app-tracking></app-tracking>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'planner'">
+                <app-planner></app-planner>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="c-search_map-container">
+        <app-map></app-map>
+      </div>
+
+      <div [style.position]="'fixed'"
+           [style.left]="contextMenuPosition.x"
+           [style.top]="contextMenuPosition.y"
+          
+           >
+      </div>
+
+      <div class="c-search_content" *ngIf="sidenavContentViewContent === 'outlet'">
+        <!-- <router-outlet></router-outlet> -->
+      </div>
+
+      <mat-menu #contextMenu="matMenu">
+        <ng-template matMenuContent let-item="item">
+        
+        </ng-template>
+      </mat-menu>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>

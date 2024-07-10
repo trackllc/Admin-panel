@@ -1,0 +1,207 @@
+.c-map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: var(--text-hex);
+    background-color: #f5f5f5 !important;
+    overflow: hidden;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  
+    .c-map-toolbar-horizontal {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 72px;
+      padding: 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      pointer-events: none;
+  
+      &.c-map-toolbar-horizontal__bottom {
+        top: auto;
+        bottom: 0;
+        padding: 16px 72px 16px 16px;
+      }
+  
+      > *:not(.flex-fill) {
+        pointer-events: auto;
+      }
+    }
+  
+    .c-map-toolbar-vertical {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: 0;
+      width: 72px;
+      height: 100%;
+      padding: 72px 16px 16px 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+  
+      > *:not(.flex-fill) {
+        pointer-events: auto;
+      }
+    }
+  
+    .c-map__x-offset {
+      margin: 0 16px;
+    }
+  
+    .c-map__right-offset {
+      margin-right: 16px;
+    }
+  
+    .c-map__left-offset {
+      margin-left: 16px;
+    }
+  
+    .c-map__y-offset {
+      margin: 16px 0;
+    }
+  
+    .c-map__top-offset {
+      margin-top: 16px;
+    }
+  
+    .c-map__bottom-offset {
+      margin-bottom: 16px;
+    }
+  
+    .flex-fill {
+      flex: 1 1 auto !important;
+      pointer-events: none;
+    }
+  
+    .c-map-button-toggle-group {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      background-color: var(--background-hex);
+      overflow: hidden;
+  
+      &.mat-button-toggle-group-appearance-standard,
+      &.mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+        border-radius: 2px;
+        border: 1px solid rgba(var(--textAccent-rgb), 0.28);
+        box-sizing: border-box;
+        transition: all 120ms ease-in-out;
+  
+        &:hover {
+          border-color: var(--primary-hex);
+        }
+      }
+  
+      &.mat-button-toggle-vertical .mat-button-toggle + .mat-button-toggle {
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 1px solid rgba(var(--textAccent-rgb), 0.28) !important;
+      }
+  
+      .mat-button-toggle + .mat-button-toggle {
+        border-left: 1px solid rgba(var(--textAccent-rgb), 0.28) !important;
+      }
+  
+      .mat-button-toggle-disabled.mat-button-toggle-appearance-standard,
+      .mat-button-toggle-disabled {
+        color: var(--textAccent-hex);
+        background-color: var(--background-hex);
+        opacity: 0.5;
+        cursor: default;
+      }
+  
+      .mat-button-toggle.mat-button-toggle-appearance-standard {
+        width: 38px;
+        height: 38px;
+        color: var(--textAccent-hex);
+        border-color: rgba(var(--textAccent-rgb), 0.28);
+  
+        .mat-button-toggle-button {
+          display: block;
+  
+          .mat-button-toggle-label-content {
+            padding: 0;
+            display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+  
+            .mat-icon {
+              display: block;
+              margin: 7px;
+            }
+          }
+        }
+      }
+    }
+  
+    .c-map-combobox_button.mat-button {
+      background-color: var(--background-hex);
+      color: #0044d6;
+      padding: 0 8px 0 16px;
+      vertical-align: middle;
+      text-align: left;
+      margin: 0;
+      overflow: hidden;
+      cursor: pointer !important;
+    }
+  
+    .c-combobox_button.mat-button {
+      margin: 0 0 0 16px;
+      overflow: hidden;
+    }
+  
+    .c-map-info-box {
+      font-size: 14px !important;
+      font-family: "Roboto", sans-serif !important;
+    }
+  
+    .c-map-combobox_button.mat-button:hover {
+      background-color: var(--background-hex) !important;
+      color: #0044d6 !important;
+    }
+  
+    .c-map-combobox_button.mat-button[disabled] {
+      background-color: var(--background-hex) !important;
+      color: #0044d6 !important;
+      padding: 0 8px 0 16px !important;
+      vertical-align: middle !important;
+      text-align: left !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      cursor: not-allowed !important;
+    }
+  
+    .c-map-combobox_button.mat-button:hover {
+      background-color: var(--background-hex) !important;
+      color: #0044d6 !important;
+    }
+  
+    .c-map-combobox_menu .mat-menu-item {
+      font-family: Roboto !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+    }
+  
+    .c-map-combobox_menu .mat-active {
+      background-color: #0044d6;
+      color: white;
+    }
+  
+    .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled) {
+      color: #465275;
+    }
+  }
+  
+  .c-map-mat-option.mat-option {
+    font-size: 14px !important;
+    padding: 0 16px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    color: var(--textAccent-hex);
+  }
+  

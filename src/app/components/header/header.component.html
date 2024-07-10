@@ -1,0 +1,29 @@
+<div class="cheader">
+  <mat-toolbar class="c-header_toolbar">
+    <a class="c-header_logo" href="./" *ngIf="logotypeUrl">
+      <img [src]="logotypeUrl" [alt]="title" />
+    </a>
+    <a mat-button class="c-header_title" href="./" *ngIf="title">{{ title }}</a>
+    <div class="w-spacer">&nbsp;</div>
+    <nav>
+      <ng-container *ngIf="userName; then userActions "></ng-container>
+    </nav>
+  </mat-toolbar>
+</div>
+
+<ng-template #userActions>
+  <button mat-button class="mat-button mat-button-wrapper" [matMenuTriggerFor]="profileMenu" [disabled]="inProcess">
+    <mat-icon>person</mat-icon>
+    <span class="mat-button-wrappe">Name</span>
+  </button>
+</ng-template>
+
+<mat-menu #profileMenu="matMenu" yPosition="below" [overlapTrigger]="false" class="header-services-menu">
+  <ng-template matMenuContent>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Выйти</span>
+    </button>
+
+  </ng-template>
+</mat-menu>

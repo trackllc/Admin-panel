@@ -1,0 +1,105 @@
+
+
+<!-- <div class="c-hotel-search-toolbar">
+    <div class="flex-row __justify-content-start">
+        <p-autoComplete class="c-hotel-search-toolbar_item c-hotel-search-toolbar_flex-fill-button" [group]="false" [field]="'caption'"
+        [suggestions]="itemsTaxon$ | async" [delay]="500" [forceSelection]="false" dataKey="id"
+        [dropdown]="false" [multiple]="false" [autoHighlight]="false"
+        [showEmptyMessage]="(itemsTaxon$ | async)?.length === 0"
+        (completeMethod)="onSearch($event)"
+        placeholder="Искать...">
+        </p-autoComplete>
+
+        <button mat-button class="c-hotel-search-toolbar_item c-hotel-search-toolbar_flex-fill-button"
+        >
+ 
+</button>
+    </div>
+</div> -->
+
+<div class="c-transfer-search-toolbar">
+    <div class="flex-row __justify-content-start">
+
+        <!-- <p-inputGroup>
+            <p-inputGroupAddon>
+                <mat-icon class="mat-icon mat-icon-group">location_on</mat-icon>
+            </p-inputGroupAddon>
+            <p-autoComplete class="c-hotel-search-toolbar_item c-hotel-search-toolbar_flex-fill-button" [group]="false" [field]="'caption'"
+            [suggestions]="itemsTaxon$ | async" [delay]="500" [forceSelection]="false" dataKey="id"
+            [dropdown]="false" [multiple]="false" [autoHighlight]="false"
+            [showEmptyMessage]="(itemsTaxon$ | async)?.length === 0"
+            (completeMethod)="onSearch($event)"
+            placeholder="Искать...">
+            </p-autoComplete>
+        </p-inputGroup>
+      <button mat-button class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button mat-button"
+             >
+        <mat-icon>location_on</mat-icon>
+        <span>address</span>
+      </button>
+  
+      <button type="button" class="mat-icon-button mat-button" mat-icon-button>
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+  
+      <button mat-button class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button mat-button">
+        <mat-icon>location_on</mat-icon>
+        <span>address</span>
+      </button>
+  
+      <mat-divider [vertical]="true"></mat-divider>
+
+    </div>
+</div> -->
+
+
+<div class="c-transfer-search-toolbar">
+    <div class="flex-row __justify-content-start">
+
+        <div class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button">
+            <button type="button" class=""><mat-icon class="mat-icon-group">location_on</mat-icon></button>
+                <p-autoComplete  [group]="false" [field]="'place_name'"
+                [suggestions]="itemsTaxon$ | async" [delay]="500" [forceSelection]="false" dataKey="id"
+                [dropdown]="false" [multiple]="false" [autoHighlight]="false"
+                [showEmptyMessage]="(itemsTaxon$ | async)?.length === 0"
+                (completeMethod)="onSearch($event)"
+                placeholder="Откуда">
+                </p-autoComplete>
+            </div>
+        <!-- <button type="button" style="margin: 0; z-index: 3;" class="header-toolbar_toggle-sidebar-nav-view-mode-button" mat-icon-button>
+            <mat-icon>swap_horiz</mat-icon>
+          </button> -->
+
+          <button type="button" style="width: 48px;" class="mat-icon-button" mat-icon-button>
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+          
+        <div class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button">
+            <button type="button" class=""><mat-icon class="mat-icon-group">location_on</mat-icon></button>
+                <p-autoComplete  [group]="false" [field]="'place_name'"
+                [suggestions]="itemsTaxon$ | async" [delay]="500" [forceSelection]="false" dataKey="id"
+                [dropdown]="false" [multiple]="false" [autoHighlight]="false"
+                [showEmptyMessage]="(itemsTaxon$ | async)?.length === 0"
+                (completeMethod)="onSearch($event)"
+                placeholder="Куда">
+                </p-autoComplete>
+            </div>
+      <!-- <button mat-button class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button mat-button"
+             >
+        <mat-icon>location_on</mat-icon>
+        <span>address</span>
+      </button>
+  
+      <button type="button" class="mat-icon-button mat-button" mat-icon-button>
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+  
+      <button mat-button class="c-transfer-search-toolbar_item c-transfer-search-toolbar_flex-fill-button mat-button">
+        <mat-icon>location_on</mat-icon>
+        <span>address</span>
+      </button> -->
+  
+     
+
+    </div>
+</div>

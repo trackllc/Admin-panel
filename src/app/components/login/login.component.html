@@ -1,0 +1,33 @@
+@if (isShow) {
+<section class="login-component">
+    <mat-card class="login">
+        <div class="form-container">
+            <mat-card-header>
+                <img *ngIf="logoUrl" mat-card-md-image [src]="logoUrl"  alt="Image of a Shiba Inu">
+            </mat-card-header>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-card-content>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Электронная почта</mat-label>
+                        <input matInput type="email" placeholder="Электронная почта" formControlName="email">
+                        <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">Введите электронную почту</mat-error>
+                        <mat-error *ngIf="loginForm.get('email')?.errors?.['email']">Недействительная электронная почта</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Пароль</mat-label>
+                        <input matInput type="password" placeholder="Пароль" formControlName="password">
+                        <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">Введите пароль</mat-error>
+                        <mat-error *ngIf="loginForm.get('password')?.errors?.['password']">Недействительный пароль</mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button class="mat-flat-button" color="primary" [disabled]="!loginForm.valid"
+                        type="submit">
+                        Войти
+                    </button>
+                </mat-card-actions>
+            </form>
+        </div>
+    </mat-card>
+</section>
+}

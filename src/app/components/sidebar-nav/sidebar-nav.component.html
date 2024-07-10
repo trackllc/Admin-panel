@@ -1,0 +1,19 @@
+<nav class="c-sidebar_nav"
+     [class.c-sidebar_nav__expanded]="viewMode === viewModeType.Expanded">
+
+  <ng-container *ngFor="let item of tabs; trackBy: trackByFn">
+
+    <button mat-button class="mat-button"
+            (click)="select(item)"
+            [class.__is-active]="selected == item.name && !(disabled || item.disabled)"
+            [disabled]="disabled || item.disabled"
+            [matTooltip]="viewMode === viewModeType.Collapsed ? item.label : ''"
+            matTooltipPosition="after">
+      <mat-icon *ngIf="item.isSvgIcon" [svgIcon]="item.icon"></mat-icon>
+      <mat-icon class="material-symbols-outlined" *ngIf="!item.isSvgIcon">{{ item.icon }}</mat-icon>
+      <span *ngIf="viewMode === viewModeType.Expanded">{{ item.label }}</span>
+    </button>
+
+  </ng-container>
+
+</nav>
