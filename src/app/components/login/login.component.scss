@@ -5,6 +5,11 @@
     color: #5A6794 !important;
 }
 
+mat-form-field.small {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+}
+
 .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
   .mdc-notched-outline__leading,
 .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
@@ -16,6 +21,17 @@
 }
 
 :host ::ng-deep  {
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:active,
+  input:-webkit-autofill:focus {
+      background-color: #FFFFFF !important;
+      color: inherit !important;
+      -webkit-box-shadow: 0 0 0 1000px white inset !important;
+      -webkit-text-fill-color: inherit !important;
+  }
+
     .mat-mdc-card {
     border-radius: 0;
     background-color: transparent;

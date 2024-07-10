@@ -19,7 +19,7 @@
 
   </div>
 
-  <mapbox-map (load)="load()" (mapClick)="click($event)" (mapRightclick)="dblclick($event)">
+  <mapbox-map (load)="load()" [bounds]="bounds" (mapClick)="click($event)" (mapRightclick)="dblclick($event)">
 
     <app-mapbox-geojson-source
     *ngIf="dataCluster" id="earthquakes" 
@@ -104,8 +104,8 @@
 
     <app-mapbox-geojson-source *ngIf="dataRoutes" id="trace" [data]="dataRoutes">
       <app-mapbox-layer *ngIf="dataRoutes" id="trace" type="line" source="trace" [paint]="{
-        'line-color': '#1C2135',
-        'line-opacity': 0.75,
+        'line-color': '#5A6794',
+        'line-opacity': 0.9,
         'line-width': 3
       }">
       </app-mapbox-layer>

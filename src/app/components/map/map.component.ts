@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MglModule } from '../mapbox/mapbox-maps-module';
 import { HttpClient } from '@angular/common/http';
+import { LngLatBounds } from 'mapbox-gl';
 
 @Component({
     selector: 'app-map',
@@ -43,7 +44,8 @@ export class MapComponent implements OnDestroy, OnInit {
     public dataCluster: any;
     public dataMarkers: any;
     public dataRoutes: any;
-    public center: any
+    public center: any;
+    public bounds: any = null;
 
     constructor(
         public sidenavService: SidenavService,
@@ -82,6 +84,11 @@ export class MapComponent implements OnDestroy, OnInit {
                 next: (data) => {
                     this.dataRoutes = data;
                     this.cdr.detectChanges();
+                    const coordinates = data.features[0].geometry.coordinates;
+                    console.log(coordinates,'coordinates')
+                    this.bounds = this.getBounds(coordinates);
+                    console.log(this.bounds,'Bounds')
+                    this.cdr.detectChanges();
                 }
             });
     }
@@ -97,10 +104,17 @@ export class MapComponent implements OnDestroy, OnInit {
             });
     }
 
+    public getBounds(coordinates: any): any {
+        return coordinates?.reduce((bounds: any, coord: any) => {
+            return bounds.extend(<any>coord);
+        }, new LngLatBounds(coordinates[0], coordinates[0]));
+    }
+
     public ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.complete();
     }
+
     public ngOnInit(): void {
         this.sidenavService.opened$
             .pipe(
