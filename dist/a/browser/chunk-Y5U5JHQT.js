@@ -1,2 +1,0 @@
-import{Ab as a,Sb as r,Zb as s,la as i,zb as o}from"./chunk-4X7OEXOC.js";var f=(()=>{let e=class e{ngAfterViewInit(){}ngOnDestroy(){}ngOnInit(){}};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=i({type:e,selectors:[["app-logistics"]],standalone:!0,features:[s],decls:2,vars:0,consts:[[1,"page_content-wrapper"]],template:function(n,p){n&1&&(o(0,"div",0),r(1,` Logistics
-`),a())},changeDetection:0});let t=e;return t})();export{f as a};
