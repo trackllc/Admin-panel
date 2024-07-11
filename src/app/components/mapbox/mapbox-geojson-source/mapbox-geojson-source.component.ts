@@ -1,15 +1,16 @@
-import { Component, Directive, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { AnySourceImpl, GeoJSONSourceOptions, GeoJSONSourceRaw } from 'mapbox-gl';
 import { MapboxMap } from '../mapbox-map/mapbox-map.component';
 import { catchError, delay, filter, fromEvent, Subject, takeUntil, throwError } from 'rxjs';
 
-@Directive({
+@Component({
   selector: 'app-mapbox-geojson-source',
+  template: '',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapboxGeojsonSourceComponent implements OnDestroy, OnInit {
 
-  private sourceAdded = false;
   public source?: AnySourceImpl;
 
   private _destroy$ = new Subject<boolean>();
@@ -41,7 +42,7 @@ export class MapboxGeojsonSourceComponent implements OnDestroy, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (!this.sourceAdded) {
+    if (!this._map.mapboxMap?.getSource(this.id)) {
       return;
     }
     if (changes['data'] && !changes['data'].isFirstChange()) {
@@ -53,7 +54,7 @@ export class MapboxGeojsonSourceComponent implements OnDestroy, OnInit {
   public ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
-    if (this.sourceAdded) {
+    if (this._map.mapboxMap?.getSource(this.id)) {
       this._map?.mapboxMap?.removeSource(this.id);
     }
   }
@@ -72,10 +73,10 @@ export class MapboxGeojsonSourceComponent implements OnDestroy, OnInit {
   }
 
   private _initialize() {
-    if (!this._map._isBrowser && this.source) return;
+    if (!this._map._isBrowser && this._map.mapboxMap?.getSource(this.id)) return;
     this._ngZone.runOutsideAngular(() => {
       this?._map?.mapboxMap?.addSource(this.id, this._combineOptions());
-      this.sourceAdded = true;
+
       this.source = this._map.mapboxMap?.getSource(this.id);
       this._assertInitialized();
     });

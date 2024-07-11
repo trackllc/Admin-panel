@@ -1,17 +1,17 @@
-import { Component, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { AnyLayer, AnySourceImpl, Layer } from 'mapbox-gl';
 import { MapboxMap } from '../mapbox-map/mapbox-map.component';
-import { catchError, delay, filter, fromEvent, map, mapTo, startWith, Subject, takeUntil, throwError } from 'rxjs';
+import { catchError, delay, filter, fromEvent, Subject, takeUntil, throwError } from 'rxjs';
 
 @Component({
     selector: 'app-mapbox-layer',
     template: '',
     standalone: true,
-    imports: []
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapboxLayerComponent implements OnDestroy, OnInit {
 
-    private layerAdded = false;
     public layer: AnySourceImpl;
 
     private _destroy$ = new Subject<boolean>();
@@ -39,7 +39,7 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (!this.layerAdded) {
+        if (!this._map?.mapboxMap?.getLayer(this.id)) {
             return;
         }
     }
@@ -47,16 +47,13 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
     public ngOnDestroy(): void {
         this._destroy$.next(true);
         this._destroy$.complete();
-        if (this.layerAdded) {
-            this._map?.mapboxMap?.removeLayer(this.id);
-        }
+        this._map?.mapboxMap?.getLayer(this.id) && this._map?.mapboxMap?.removeLayer(this.id);
     }
 
     private _initialize() {
-        if (!this._map._isBrowser && this.layer) return;
+        if (!this._map._isBrowser && this._map?.mapboxMap?.getLayer(this.id)) return;
         this._ngZone.runOutsideAngular(() => {
             this?._map?.mapboxMap?.addLayer(this._combineOptions());
-            this.layerAdded = true;
             (this.layer as any) = this._map.mapboxMap?.getLayer(this.id);
             this._assertInitialized();
         });

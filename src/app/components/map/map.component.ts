@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MglModule } from '../mapbox/mapbox-maps-module';
+import { MglModule as MapboxModule } from '../mapbox/mapbox-maps-module';
 import { HttpClient } from '@angular/common/http';
 import { LngLatBounds } from 'mapbox-gl';
 import { LoadProgressService } from '../../core/services/load-progress.service';
@@ -28,7 +28,7 @@ import { LoadProgressService } from '../../core/services/load-progress.service';
         MatTooltipModule,
         RouterModule,
         MatMenuModule,
-        MglModule
+        MapboxModule
     ],
     providers: [MapSearchService],
     changeDetection: ChangeDetectionStrategy.OnPush,
