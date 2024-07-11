@@ -53,8 +53,8 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     @Input() zoom?: MapboxOptions['zoom'];
     @Input() bearing?: MapboxOptions['bearing'];
     @Input() pitch?: MapboxOptions['pitch'];
-
-
+    @Input() language?: any;
+    
     @Output() readonly mapInitialized: EventEmitter<any> =
         new EventEmitter<mapboxgl.Map>();
 
@@ -85,6 +85,8 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
         changes['bounds'] && this.mapboxMap?.fitBounds(this.bounds!);
         changes['center'] && this.mapboxMap?.setCenter(this.center!);
         changes['zoom'] && this.mapboxMap?.setZoom(this.zoom!);
+        changes['style'] && this.mapboxMap?.setStyle(this.style!);
+        changes['language'] && this.setLayerProperty();
     }
 
     public ngOnInit(): void {
@@ -109,7 +111,7 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     private _combineOptions(): MapboxOptions {
         return {
             bounds: this.bounds,
-            style: this.style || 'mapbox://styles/mapbox/light-v11',
+            style: this.style || 'mapbox://styles/mapbox/standard',
             center: this.center,
             maxBounds: this.maxBounds,
             zoom: this.zoom || 0,
@@ -132,6 +134,10 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     public getZoom(): number {
         this._assertInitialized();
         return this.mapboxMap?.getZoom()!;
+    }
+
+    public setLayerProperty(){
+        this.mapboxMap?.setLayoutProperty('country-label-lg', 'text-field', '{name_' + this.language + '}');
     }
 
     private _setSize(): void {
