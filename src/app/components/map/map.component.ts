@@ -86,7 +86,6 @@ export class MapComponent implements OnDestroy, OnInit {
             .subscribe({
                 next: (data) => {
                     this.dataRoutes = data;
-                    this.cdr.detectChanges();
                     const coordinates = data.features[0].geometry?.coordinates;
                     this.bounds = this.getBounds(coordinates);
                     this.cdr.detectChanges();
