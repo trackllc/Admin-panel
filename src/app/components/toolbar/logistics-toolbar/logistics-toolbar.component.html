@@ -7,7 +7,7 @@
         <p-autoComplete [group]="false" [field]="'place_name'" dataKey="id"
           [showClear]="true" [delay]="500" [forceSelection]="true" [dropdown]="false" [multiple]="false"
           [autoHighlight]="false" [suggestions]="searchData$ | async" [emptyMessage]="'Нет результатов поиска'"
-          (completeMethod)="onSearch($event)" placeholder="Откуда" title="hello">
+          (completeMethod)="onSearch($event)" placeholder="Откуда">
           <ng-template let-group pTemplate="item">
             <div class="flex align-items-center">
               <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] == 'poi'">{{
@@ -32,7 +32,7 @@
         <p-autoComplete [group]="false" [field]="'place_name'" dataKey="id"
           [showClear]="true" [delay]="500" [forceSelection]="true" [dropdown]="false" [multiple]="false"
           [autoHighlight]="false" [suggestions]="searchData$ | async" [emptyMessage]="'Нет результатов поиска'"
-          (completeMethod)="onSearch($event)" placeholder="Куда" title="hello">
+          (completeMethod)="onSearch($event)" placeholder="Куда">
           <ng-template let-group pTemplate="item">
             <div class="flex align-items-center">
               <mat-icon class="mat-icon mat-icon-group" *ngIf="group.place_type[0] == 'poi'">{{
