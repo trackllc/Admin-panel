@@ -57,8 +57,8 @@ export class MapComponent implements OnDestroy, OnInit {
     ) {
 
         this._isBrowser = isPlatformBrowser(platformId);
-        this.getClusterJson();
         this.getRouteJson();
+        this.getClusterJson();
         this.getMarkerJson();
     }
 
@@ -81,7 +81,7 @@ export class MapComponent implements OnDestroy, OnInit {
         this._http.get<any>('https://api.track.bstrv.ru/v1/track')
             .pipe(
                 filter((data) => data?.features[0].geometry?.coordinates?.length > 0),
-                delay(100)
+                delay(0)
             )
             .subscribe({
                 next: (data) => {
