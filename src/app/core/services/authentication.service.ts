@@ -1,12 +1,10 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { catchError, map, switchMap, tap } from "rxjs/operators";
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { tap } from "rxjs/operators";
+import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClientService } from './http-client.service';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { JWT_NAME } from '../../constants/jwt-name.constant';
 import { TokenService } from './token.service';
-import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

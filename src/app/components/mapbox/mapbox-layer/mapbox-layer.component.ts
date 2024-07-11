@@ -16,13 +16,6 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
 
     private _destroy$ = new Subject<boolean>();
 
-    // @Input() id: AnyLayer['id'];
-    // @Input() source?: Layer['source'];
-    // @Input() type: AnyLayer['type'];
-    // @Input() options?: Layer;
-    // @Input() paint?: Layer['paint'];
-    // @Input() layout?: Layer['layout'];
-
     @Input() id: AnyLayer['id'];
     @Input() source?: Layer['source'];
     @Input() type: AnyLayer['type'];

@@ -46,13 +46,14 @@ export class LoginComponent implements OnInit {
 
     public onSubmit() {
         if (this.loginForm.invalid) return;
-
         this._authService.login(this.loginForm.value)
             .pipe(
                 tap(token => token && this._router.navigate(['board'])),
-                catchError((error) => {
-                    return throwError(() => new Error('Error refreshing access token:'));
-                  })
+                catchError((error: any) => {
+                    error.error.description.includes("Password") && this.loginForm.controls['password'].setErrors({ 'passwordError': true });
+                    error.error.description.includes("E-mail") && this.loginForm.controls['email'].setErrors({ 'emailError': true });
+                    return throwError(() => error);
+                })
 
             ).subscribe();
     }

@@ -29,7 +29,7 @@ export class JwtInterceptor implements HttpInterceptor {
           if (error.status === 401 && accessToken) {
             return this._handleTokenExpired(request, next);
           }
-          return throwError(() => new Error('Error'));
+          return throwError(() => error);
         })
       );
   }

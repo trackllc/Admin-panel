@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapboxMap } from '../mapbox/mapbox-map/mapbox-map.component';
 import { SidenavService } from '../../core/services/sidenav.service';
-import { delay, filter, Subject, takeUntil } from 'rxjs';
+import { delay, filter, of, Subject, takeUntil, tap } from 'rxjs';
 import { MapSearchService } from './services/map-search.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -13,6 +13,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MglModule } from '../mapbox/mapbox-maps-module';
 import { HttpClient } from '@angular/common/http';
 import { LngLatBounds } from 'mapbox-gl';
+import { LoadProgressService } from '../../core/services/load-progress.service';
 
 @Component({
     selector: 'app-map',
@@ -47,20 +48,22 @@ export class MapComponent implements OnDestroy, OnInit {
     public center: any;
     public bounds: any = null;
 
+    private _destroy$ = new Subject<boolean>();
+
     constructor(
         public sidenavService: SidenavService,
         private _ngZone: NgZone,
         public cdr: ChangeDetectorRef,
         public searchService: MapSearchService,
         @Inject(PLATFORM_ID) platformId: Object,
+        private _loadProgressService: LoadProgressService,
         private _http: HttpClient
     ) {
 
         this._isBrowser = isPlatformBrowser(platformId);
-        this.getRouteJson();
-        this.getClusterJson();
-        this.getMarkerJson();
     }
+
+
 
     public markerClick(event: any) { }
 
@@ -81,7 +84,7 @@ export class MapComponent implements OnDestroy, OnInit {
         this._http.get<any>('https://api.track.bstrv.ru/v1/track')
             .pipe(
                 filter((data) => data?.features[0].geometry?.coordinates?.length > 0),
-                delay(0)
+                takeUntil(this._destroy$)
             )
             .subscribe({
                 next: (data) => {
@@ -89,7 +92,8 @@ export class MapComponent implements OnDestroy, OnInit {
                     const coordinates = data.features[0].geometry?.coordinates;
                     this.bounds = this.getBounds(coordinates);
                     this.cdr.detectChanges();
-                }
+                },
+                complete: () => of({}).pipe(delay(2000), tap(() => this._loadProgressService.hide(1))).subscribe()
             });
     }
 
@@ -116,6 +120,10 @@ export class MapComponent implements OnDestroy, OnInit {
     }
 
     public ngOnInit(): void {
+        this._loadProgressService.show(1);
+        this.getRouteJson();
+        this.getClusterJson();
+        this.getMarkerJson();
         this.sidenavService.opened$
             .pipe(
                 delay(50),
@@ -123,7 +131,11 @@ export class MapComponent implements OnDestroy, OnInit {
             )
             .subscribe((opened: any) => {
                 this.map.mapboxMap && this.map.mapboxMap.resize();
+                ;
             });
+
+
+
     }
 
     public load(): void {
