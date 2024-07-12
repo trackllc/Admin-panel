@@ -1,0 +1,25 @@
+.imapsCircle {
+    paint-order: stroke;
+    stroke-opacity:1;
+    stroke: #dd9933; /* change with the stroke color you want */
+    animation: pulse-me 1s linear infinite;
+}
+
+/* or target by colour */
+.imapsCircle-group[fill="#1e73be"] .imapsCircle {
+    paint-order: stroke;
+    stroke-opacity:1;
+    stroke: #dd9933; /* change with the stroke color you want */
+    animation: pulse-me 1s linear infinite;
+}
+
+@keyframes pulse-me {
+  0% {
+    stroke-opacity: 0.9;
+    stroke-width:0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width:25px;
+  }
+}

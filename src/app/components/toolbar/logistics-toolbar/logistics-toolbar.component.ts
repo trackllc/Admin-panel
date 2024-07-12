@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
-import { MapSearchService } from '../../map/services/map-search.service';
+import { MapSearchService } from '../../mapbox/services/map-search.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -45,14 +45,13 @@ export class LogisticsToolbarComponent implements AfterViewInit, OnDestroy, OnIn
             .pipe(
 
         ).subscribe((data: any) => {
-            console.log(data, 'data')
             this.searchData$.next(data.features);
             this.cdr.detectChanges();
         });
     }
 
     public getIcon(type: any): string {
-        const placeType = type.split(' ')[0];
+        const placeType = type?.split(' ')[0];
         /* @ts-ignore */
         const icon = PlaceIconsType[placeType] ? PlaceIconsType[placeType] : 'location_city';
         return icon;

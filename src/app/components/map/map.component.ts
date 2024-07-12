@@ -5,7 +5,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MapboxMap } from '../mapbox/mapbox-map/mapbox-map.component';
 import { SidenavService } from '../../core/services/sidenav.service';
 import { delay, filter, of, Subject, takeUntil, tap } from 'rxjs';
-import { MapSearchService } from './services/map-search.service';
+import { MapSearchService } from '../mapbox/services/map-search.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,6 +14,7 @@ import { MglModule as MapboxModule } from '../mapbox/mapbox-maps-module';
 import { HttpClient } from '@angular/common/http';
 import { LngLatBounds } from 'mapbox-gl';
 import { LoadProgressService } from '../../core/services/load-progress.service';
+import { default as dataImage } from '../mapbox//constants/marker-canvas.constant';
 
 @Component({
     selector: 'app-map',
@@ -38,16 +39,18 @@ export class MapComponent implements OnDestroy, OnInit {
     @ViewChild(MapboxMap, { static: true }) map: MapboxMap;
 
     public contextMenuPosition = { x: '0px', y: '0px' };
-
-    private _isBrowser: boolean;
-
-    public destroy$ = new Subject<boolean>();
     public dataCluster: any;
     public dataMarkers: any;
     public dataRoutes: any;
     public center: any;
-    public bounds: any = null;
+    public bounds: any;
+    public isShowPopup: boolean;
+    public position: number[] = [];
+    public imageData: any;
+    public geolocationData: any;
+    public zoom: number = 0;
 
+    private _isBrowser: boolean;
     private _destroy$ = new Subject<boolean>();
 
     constructor(
@@ -61,9 +64,8 @@ export class MapComponent implements OnDestroy, OnInit {
     ) {
 
         this._isBrowser = isPlatformBrowser(platformId);
+        this._watchForSidenavChanges();
     }
-
-
 
     public markerClick(event: any) { }
 
@@ -115,8 +117,8 @@ export class MapComponent implements OnDestroy, OnInit {
     }
 
     public ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.complete();
+        this._destroy$.next(true);
+        this._destroy$.complete();
     }
 
     public ngOnInit(): void {
@@ -124,38 +126,63 @@ export class MapComponent implements OnDestroy, OnInit {
         this.getRouteJson();
         this.getClusterJson();
         this.getMarkerJson();
-        this.sidenavService.opened$
-            .pipe(
-                delay(50),
-                takeUntil(this.destroy$),
-            )
-            .subscribe((opened: any) => {
-                this.map.mapboxMap && this.map.mapboxMap.resize();
-                ;
-            });
 
-
-
+        this.isShowPopup = true;
     }
 
-    public load(): void {
-        if (this._isBrowser) {
-            this.center && this.map.mapboxMap?.setCenter([74.864155, 42.889409]);
-            this.center && this.map.mapboxMap?.setZoom(24);
-            this.cdr.detectChanges();
+    public onGeolocation(position: any) {
+        this.position = position;
+        this.geolocationData = {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': this.position
+                        }
+                    }
+                ]
+            }
         }
+        this.cdr.detectChanges();
     }
 
-    public dblclick(event: any) {
+    public onGeolocationClick(position: any) {
+        if (!position) return;
+        this.map.setCenter(this.position);
+        this.map.setZoom(20);
+    }
+
+    public load(map: any): void {
+        if (!this.map.mapboxMap) return;
+        (this.imageData as any) = dataImage(this.map.mapboxMap, 80);
+        this.cdr.detectChanges();
+    }
+
+    public dblclick(event: any): void {
         this.contextMenuPosition.x = `${event.originalEvent.clientX}px`;
         this.contextMenuPosition.y = `${event.originalEvent.clientY}px`;
         this.contextMenu.menuData = { item: event.lngLat };
         this.contextMenu.openMenu();
     }
 
-    public click(event: any) { }
+    public click(event: any): void { }
 
-    public onClick(event: any) {
+    public onClick(event: any): void {
         console.log('ONCLICK', event)
+    }
+
+    private _watchForSidenavChanges(): void {
+        this.sidenavService.opened$
+            .pipe(
+                delay(50),
+                takeUntil(this._destroy$),
+            )
+            .subscribe((opened: any) => {
+                this.map.mapboxMap && this.map.mapboxMap.resize();
+            });
     }
 }

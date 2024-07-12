@@ -10,7 +10,7 @@
     <div class="flex-fill"></div>
     <mapbox-zoom-control></mapbox-zoom-control>
 
-    <mapbox-geolocation-control class="c-map__y-offset"></mapbox-geolocation-control>
+    <mapbox-geolocation-control class="c-map__y-offset" (geoLocation)="onGeolocation($event)" (onChange)="onGeolocationClick($event)"></mapbox-geolocation-control>
     <div class="flex-fill"></div>
 
   </div>
@@ -19,20 +19,13 @@
 
   </div>
 
-  <mapbox-map (load)="load()" [bounds]="bounds" (mapClick)="click($event)" (mapRightclick)="dblclick($event)">
+  <mapbox-map (load)="load($event)" [bounds]="bounds" [center]="center" [zoom]="zoom" (mapClick)="click($event)" (mapRightclick)="dblclick($event)">
 
-    <app-mapbox-geojson-source
-    *ngIf="dataCluster" id="earthquakes" 
-    [data]="dataCluster" 
-    [cluster]="true" [clusterMaxZoom]="14"
-     [clusterRadius]="50">
+    <!-- <app-mapbox-geojson-source *ngIf="dataCluster" id="earthquakes" [data]="dataCluster" [cluster]="true"
+      [clusterMaxZoom]="14" [clusterRadius]="50">
 
-     <app-mapbox-layer *ngIf="dataCluster"
-     id="clusters"
-     type="circle"
-     source="earthquakes"
-     [filter]="['has', 'point_count']"
-     [paint]="{
+      <app-mapbox-layer *ngIf="dataCluster" id="clusters" type="circle" source="earthquakes"
+        [filter]="['has', 'point_count']" [paint]="{
        'circle-color': {
            property: 'point_count',
            type: 'interval',
@@ -51,56 +44,41 @@
                [750, 22]
            ]
        }
-     }"
-     ></app-mapbox-layer>
+     }"></app-mapbox-layer>
 
-     <app-mapbox-layer *ngIf="dataCluster"
-     id="cluster-count"
-     type="symbol"
-     source="earthquakes"
-     [filter]="['has', 'point_count']"
-     [paint]="{
+      <app-mapbox-layer *ngIf="dataCluster" id="cluster-count" type="symbol" source="earthquakes"
+        [filter]="['has', 'point_count']" [paint]="{
       'text-color': '#fff',
-    }"
-     [layout]="{
+    }" [layout]="{
        'text-field': '{point_count_abbreviated}',
        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
        'text-size': 12,
 
-     }"
-     ></app-mapbox-layer>
+     }"></app-mapbox-layer>
 
-     <app-mapbox-layer *ngIf="dataCluster"
-     id="unclustered-point"
-     type="circle"
-     source="earthquakes"
-     [filter]="['!has', 'point_count']"
-     [paint]="{
+      <app-mapbox-layer *ngIf="dataCluster" id="unclustered-point" type="circle" source="earthquakes"
+        [filter]="['!has', 'point_count']" [paint]="{
        'circle-color': '#8794C0',
        'circle-radius': 4,
        'circle-stroke-width': 1,
        'circle-stroke-color': '#fff',
        'text-color': '#fff',
-     }"
-     ></app-mapbox-layer>
-   </app-mapbox-geojson-source>
+     }"></app-mapbox-layer>
+    </app-mapbox-geojson-source>  -->
 
-   <ng-container *ngIf="dataMarkers">
-    <app-mapbox-marker  *ngFor="let feature of dataMarkers?.features" (markerClick)="markerClick(feature)"
-      [feature]="feature">
-      <div class="marker" [ngStyle]="{
-          'background-image': 'url(./assets/img/marker-pin.svg)',
-          'background-size': 'cover',
-           width: '24px',
-           height: '36px',
-          cursor: 'pointer'
-        }">
-      </div>
-    </app-mapbox-marker>
-  </ng-container>
-    <app-mapbox-popup *ngIf="dataMarkers" [lngLat]="[74.864155, 42.889409]" [closeOnClick]="false" (popupOpen)="popupOpen()">
+    <!-- <ng-container *ngIf="dataMarkers">
+      <app-mapbox-marker *ngFor="let feature of dataMarkers?.features" (markerClick)="markerClick(feature)"
+        [feature]="feature">
+        <div class="default">
+        </div>
+      </app-mapbox-marker>
+    </ng-container> -->
+
+
+    <!-- <app-mapbox-popup *ngIf="isShowPopup" [lngLat]="[74.864155, 42.889409]" [closeOnClick]="false"
+      (popupOpen)="popupOpen()">
       <h2 style="margin-bottom:0">Track LLC</h2>
-    </app-mapbox-popup>
+    </app-mapbox-popup> -->
 
     <app-mapbox-geojson-source *ngIf="dataRoutes" id="trace" [data]="dataRoutes">
       <app-mapbox-layer *ngIf="dataRoutes" id="trace" type="line" source="trace" [paint]="{
@@ -109,7 +87,16 @@
         'line-width': 3
       }">
       </app-mapbox-layer>
-    </app-mapbox-geojson-source>
+    </app-mapbox-geojson-source> 
+
+    <app-mapbox-image *ngIf="imageData" id="pulsing-dot" [data]="imageData">
+     
+      
+    </app-mapbox-image> 
+    <app-mapbox-layer *ngIf="geolocationData" [delay]="7000" [source]="geolocationData" id="layer-with-pulsing-dot" type="symbol"  [layout]="{
+      'icon-image': 'pulsing-dot'
+    }"> </app-mapbox-layer> 
+
 
   </mapbox-map>
 

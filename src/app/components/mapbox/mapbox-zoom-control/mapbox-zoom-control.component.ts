@@ -5,9 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
-import { MapboxService } from '../../map/services/mapbox.service';
+import { MapboxService } from '../services/mapbox.service';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { MapEventManager } from '../../map/services/map-event-manager';
+import { MapEventManager } from '../services/map-event-manager';
 @Component({
     selector: 'mapbox-zoom-control',
     templateUrl: './mapbox-zoom-control.component.html',

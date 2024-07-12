@@ -18,10 +18,10 @@ import {
 import { SidebarModule } from 'primeng/sidebar';
 
 import { isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import mapboxgl, { MapboxOptions } from 'mapbox-gl';
-import { MapEventManager } from '../../map/services/map-event-manager';
-import { MapboxService } from '../../map/services/mapbox.service';
+import { MapEventManager } from '../services/map-event-manager';
+import { MapboxService } from '../services/mapbox.service';
 
 
 export const DEFAULT_HEIGHT = '100%';
@@ -29,7 +29,7 @@ export const DEFAULT_WIDTH = '100%';
 
 @Component({
     selector: 'mapbox-map',
-    exportAs: 'MapboxMap',
+    exportAs: 'mapboxMap',
     standalone: true,
     imports: [SidebarModule],
     templateUrl: './mapbox-map.component.html',
@@ -44,6 +44,8 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     public mapboxMap?: mapboxgl.Map;
     public _isBrowser: boolean;
 
+    public loadStyle$ = new BehaviorSubject<any | null>(null);
+
     @Input() height: string = DEFAULT_HEIGHT;
     @Input() width: string = DEFAULT_WIDTH;
     @Input() bounds?: MapboxOptions['bounds'];
@@ -54,7 +56,7 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     @Input() bearing?: MapboxOptions['bearing'];
     @Input() pitch?: MapboxOptions['pitch'];
     @Input() language?: any;
-    
+
     @Output() readonly mapInitialized: EventEmitter<any> =
         new EventEmitter<mapboxgl.Map>();
 
@@ -72,13 +74,19 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     @Output() readonly mapRightclick: Observable<void> =
         this._eventManager.getLazyEmitter<void>('contextmenu');
 
+    @Output() readonly mapStyleData: Observable<void> =
+        this._eventManager.getLazyEmitter<void>('styledata');
+
+
     constructor(
         private readonly _elementRef: ElementRef,
         private _ngZone: NgZone,
         private _mapService: MapboxService,
         @Inject(PLATFORM_ID) platformId: Object,
     ) {
+        this.mapStyleData.subscribe(() => this.loadStyle$.next(true))
         this._isBrowser = isPlatformBrowser(platformId);
+
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -103,7 +111,6 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
             this.mapboxMap = new mapboxgl.Map(this._combineOptions());
             this._mapService.load$.next(this.mapboxMap);
             this._eventManager.setTarget(this.mapboxMap);
-            this.mapInitialized.emit(this.mapboxMap);
             this.mapboxMap?.on('load', () => this.mapboxMap?.resize());
         });
     }
@@ -111,7 +118,7 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     private _combineOptions(): MapboxOptions {
         return {
             bounds: this.bounds,
-            style: this.style || 'mapbox://styles/mapbox/standard',
+            style: this.style || 'mapbox://styles/mapbox/streets-v12',
             center: this.center,
             maxBounds: this.maxBounds,
             zoom: this.zoom || 0,
@@ -136,7 +143,17 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
         return this.mapboxMap?.getZoom()!;
     }
 
-    public setLayerProperty(){
+    public setZoom(zoom: number): void {
+        this._assertInitialized();
+        this.mapboxMap?.setZoom(zoom)!;
+    }
+
+    public setCenter(center: any): void {
+        this._assertInitialized();
+        this.mapboxMap?.setCenter(center)!;
+    }
+
+    public setLayerProperty() {
         this.mapboxMap?.setLayoutProperty('country-label-lg', 'text-field', '{name_' + this.language + '}');
     }
 

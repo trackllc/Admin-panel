@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, 
 import { AnyLayer, AnySourceImpl, Layer, LngLatLike, Marker, MarkerOptions, PointLike, Popup, PopupOptions } from 'mapbox-gl';
 import { MapboxMap } from '../mapbox-map/mapbox-map.component';
 import { catchError, delay, filter, fromEvent, map, mapTo, Observable, startWith, Subject, takeUntil, throwError } from 'rxjs';
-import { MapEventManager } from '../../map/services/map-event-manager';
+import { MapEventManager } from '../services/map-event-manager';
 
 @Component({
     selector: 'app-mapbox-popup',

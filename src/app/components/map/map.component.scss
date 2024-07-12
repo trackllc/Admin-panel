@@ -4,7 +4,6 @@
 }
 
 .mat-button-toggle .mat-pseudo-checkbox {
-  /* margin-right: 12px; */
   display: none;
 }
 
@@ -220,4 +219,186 @@
     line-height: 40px !important;
     color: var(--textAccent-hex);
   }
+
+  .poi,
+  .negarate,
+  .geniusRate,
+  .favorite,
+  .default {
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .default::after,
+  .default::before {
+    position: absolute;
+    top: 50%;
+    width: 112px !important;
+    height: 112px !important;
+    overflow: visible !important;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    background-color: #1e9a50;
+    content: "";
+    z-index: -1;
+    display: block;
+    pointer-events: none;
+  }
+
+  span.BMap_Marker.default::after,
+  span.BMap_Marker.default::before {
+    margin-top: -45px !important;
+    margin-left: -45px !important;
+  }
+
+  ymaps.default::after,
+  ymaps.default::before {
+    margin-top: -52px !important;
+    margin-left: -51px !important;
+  }
+
+  .gm-style .default::after,
+  .gm-style .default::before {
+    margin-top: -45px !important;
+    margin-left: -56px !important;
+  }
+  .leaflet-pane .default::after,
+  .leaflet-pane .default::before {
+    margin-top: -56px;
+    margin-left: -56px;
+  }
+
+  .default::before {
+    /* clean-css ignore:start */
+    -webkit-animation: _3Pd6Y 1.5s 0.05s infinite forwards;
+    -moz-animation: _3Pd6Y- 1.5s 0.5s infinite forwards;
+    animation: _3Pd6Y 1.5s 0.05s infinite forwards;
+    /* clean-css ignore:end */
+  }
+
+  .default::after {
+    /* clean-css ignore:start */
+    -webkit-animation: _3SBA- 1.5s 0.3s infinite forwards;
+    -moz-animation: _3SBA- 1.5s 0.3s infinite forwards;
+    animation: _3SBA- 1.5s 0.3s infinite forwards;
+    /* clean-css ignore:end */
+  }
+
+  .default {
+    overflow: visible !important;
+  }
+
+  .negarate::after,
+  .negarate::before {
+    position: absolute;
+    top: 50%;
+    width: 112px !important;
+    height: 112px !important;
+    overflow: visible !important;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    background-color: #00b1aa;
+    content: "";
+    z-index: -1;
+    display: block;
+    pointer-events: none;
+  }
+
+  span.BMap_Marker.negarate::after,
+  span.BMap_Marker.negarate::before {
+    margin-top: -45px !important;
+    margin-left: -45px !important;
+  }
+
+  ymaps.negarate::after,
+  ymaps.negarate::before {
+    margin-top: -52px !important;
+    margin-left: -51px !important;
+  }
+
+  .gm-style .negarate::after,
+  .gm-style .negarate::before {
+    margin-top: -46px !important;
+    margin-left: -57px !important;
+  }
+  .leaflet-pane .negarate::after,
+  .leaflet-pane .negarate::before {
+    margin-top: -56px;
+    margin-left: -56px;
+  }
+
+  @-webkit-keyframes _3Pd6Y {
+    0% {
+      opacity: 0.2;
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+    }
+
+    45% {
+      opacity: 0.2;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes _3Pd6Y {
+    0% {
+      opacity: 0.2;
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+    }
+
+    45% {
+      opacity: 0.2;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  @-webkit-keyframes _3SBA- {
+    0% {
+      opacity: 0.3;
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+    }
+
+    50% {
+      opacity: 0.3;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes _3SBA- {
+    0% {
+      opacity: 0.3;
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+    }
+
+    50% {
+      opacity: 0.3;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
   

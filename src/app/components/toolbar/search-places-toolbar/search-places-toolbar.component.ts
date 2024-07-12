@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { MapSearchService } from '../../map/services/map-search.service';
+import { MapSearchService } from '../../mapbox/services/map-search.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -43,7 +43,6 @@ export class SarchPlacesToolbarComponent implements AfterViewInit, OnDestroy, On
             .pipe(
 
         ).subscribe((data: any) => {
-            console.log(data, 'data')
             this.searchData$.next([...data.features]);
             this.cdr.detectChanges();
         });

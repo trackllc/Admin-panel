@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { MapSearchService } from '../../map/services/map-search.service';
+import { MapSearchService } from '../../mapbox/services/map-search.service';
 import { BehaviorSubject } from 'rxjs';
 import { HighlightPipe } from '../../../pipes/highlight.pipe';
 import { ButtonModule } from 'primeng/button';
@@ -26,18 +26,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class RoutePlannerToolbarComponent implements AfterViewInit, OnDestroy, OnInit {
 
-  public searchText = '';
-
-  filteredCountries: any[] | undefined;
-  selectedCountryAdvanced: any[] | undefined;
-
   constructor(
     public searchService: MapSearchService,
     public cdr: ChangeDetectorRef
   ) { }
 
   public searchData$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  public tabs = searchNavigationTabs;
 
 
   public ngAfterViewInit(): void {
@@ -56,50 +50,21 @@ export class RoutePlannerToolbarComponent implements AfterViewInit, OnDestroy, O
 
   public onSearch(event: any) {
     let query = event.query;
-    this.searchText = event.query;
+    if (query.length < 3) return;
     this.searchService.search(query)
       .pipe(
 
     ).subscribe((data: any) => {
-      this.searchData$.next([...data.features]);
+      this.searchData$.next(data.features);
       this.cdr.detectChanges();
     });
   }
 
   public getIcon(type: any): string {
-    const placeType = type.split(' ')[0];
+    const placeType = type?.split(' ')[0];
     /* @ts-ignore */
     const icon = PlaceIconsType[placeType] ? PlaceIconsType[placeType] : 'location_city';
     return icon;
   }
 
 }
-
-
-
-export const searchNavigationTabs: any = [
-  {
-    name: 'Hotel booking 2.0',
-    tooltipText: 'Hotel booking',
-    icon: 'domain',
-    url: '/search/hotel',
-    disabled: false,
-    code: 'hotelBooking',
-  },
-  {
-    name: 'Air booking',
-    tooltipText: 'Air booking',
-    icon: 'local_airport',
-    url: '/search/air',
-    disabled: false,
-    code: ' airBooking',
-  },
-  {
-    name: 'Transfer',
-    tooltipText: 'Transfer',
-    icon: 'directions_car',
-    url: '/search/transfer',
-    disabled: false,
-    code: 'transfer',
-  }
-];

@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Subject } from 'rxjs';
 import { DocumentElement } from '../../map/enums/document-element';
-import { FullscreenService } from '../../map/services/map-fullscreen.service';
+import { FullscreenService } from '../services/map-fullscreen.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
 @Component({

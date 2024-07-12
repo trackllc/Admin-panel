@@ -7,6 +7,7 @@ import { MapboxLayerComponent } from './mapbox-layer/mapbox-layer.component';
 import { MapboxGeolocationComponent } from './mapbox-geolocation/mapbox-geolocation.component';
 import { MapboxMarkerComponent } from './mapbox-marker/mapbox-marker.component';
 import { MapboxPopupComponent } from './mapbox-popup/mapbox-popup.component';
+import { MapboxImageComponent } from './mapbox-image/mapbox-image';
 
 const COMPONENTS = [
     MapboxMap,
@@ -16,7 +17,8 @@ const COMPONENTS = [
     MapboxGeojsonSourceComponent,
     MapboxLayerComponent,
     MapboxMarkerComponent,
-    MapboxPopupComponent
+    MapboxPopupComponent,
+    MapboxImageComponent
 ];
 
 @NgModule({

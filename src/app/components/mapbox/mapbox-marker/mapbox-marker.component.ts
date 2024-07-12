@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AnyLayer, AnySourceImpl, Layer, LngLat, LngLatLike, Marker, MarkerOptions } from 'mapbox-gl';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { LngLat, LngLatLike, Marker, MarkerOptions } from 'mapbox-gl';
 import { MapboxMap } from '../mapbox-map/mapbox-map.component';
-import { catchError, delay, filter, fromEvent, map, mapTo, Observable, startWith, Subject, takeUntil, throwError } from 'rxjs';
-import { MapEventManager } from '../../map/services/map-event-manager';
+import { Observable } from 'rxjs';
+import { MapEventManager } from '../services/map-event-manager';
 
 @Component({
     selector: 'app-mapbox-marker',
@@ -81,7 +81,7 @@ export class MapboxMarkerComponent implements OnDestroy, OnInit {
     }
 
     private _assertInitialized(): any {
-        if (!this?.feature) {
+        if (!this?.marker) {
             throw Error(
                 'Cannot interact with a Mapbox before it has been ' +
                 'initialized. Please wait for the Marker to load before trying to interact with it.',

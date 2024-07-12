@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { AnyLayer, AnySourceImpl, Layer } from 'mapbox-gl';
 import { MapboxMap } from '../mapbox-map/mapbox-map.component';
 import { catchError, delay, filter, fromEvent, Subject, takeUntil, throwError } from 'rxjs';
@@ -27,10 +27,12 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
     @Input() before?: string;
     @Input() minzoom?: Layer['minzoom'];
     @Input() maxzoom?: Layer['maxzoom'];
+    @Input() delay?: number = 100;
 
     constructor(
         private readonly _map: MapboxMap,
         private readonly _ngZone: NgZone,
+        public cdr: ChangeDetectorRef,
     ) {
     }
 
@@ -55,6 +57,7 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
         this._ngZone.runOutsideAngular(() => {
             this?._map?.mapboxMap?.addLayer(this._combineOptions());
             (this.layer as any) = this._map.mapboxMap?.getLayer(this.id);
+            this.cdr.detectChanges();
             this._assertInitialized();
         });
     }
@@ -62,7 +65,7 @@ export class MapboxLayerComponent implements OnDestroy, OnInit {
     private _watchForStylesChanges() {
         fromEvent(this._map?.mapboxMap!, 'styledata')
             .pipe(
-                delay(100),
+                delay(this.delay!),
                 filter(() => !this._map?.mapboxMap?.getLayer(this.id)),
                 takeUntil(this._destroy$),
                 catchError((error) => {
