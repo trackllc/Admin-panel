@@ -151,6 +151,17 @@ export class MapboxMap implements OnChanges, OnInit, OnDestroy {
     public setCenter(center: any): void {
         this._assertInitialized();
         this.mapboxMap?.setCenter(center)!;
+
+    }
+
+    public addImage(name: any, image: any): void {
+        this._assertInitialized();
+        this.mapboxMap?.addImage(name, image)
+    }
+
+    public addLayer(layer: mapboxgl.AnyLayer, before?: string): void {
+        this._assertInitialized();
+        this.mapboxMap?.addLayer(layer, before);
     }
 
     public setLayerProperty() {

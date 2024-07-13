@@ -132,7 +132,19 @@ export class MapComponent implements OnDestroy, OnInit {
 
     public onGeolocation(position: any) {
         this.position = position;
-        this.geolocationData = {
+        this.cdr.detectChanges();
+    }
+
+    public onGeolocationClick(position: any) {
+        if (!position) return;
+        this.map.setCenter(this.position);
+        this.map.setZoom(20);
+    }
+
+    public load(map: any): void {
+        if (!this.map.mapboxMap) return;
+
+        const sourse = {
             'type': 'geojson',
             'data': {
                 'type': 'FeatureCollection',
@@ -147,18 +159,15 @@ export class MapComponent implements OnDestroy, OnInit {
                 ]
             }
         }
-        this.cdr.detectChanges();
-    }
-
-    public onGeolocationClick(position: any) {
-        if (!position) return;
-        this.map.setCenter(this.position);
-        this.map.setZoom(20);
-    }
-
-    public load(map: any): void {
-        if (!this.map.mapboxMap) return;
-        (this.imageData as any) = dataImage(this.map.mapboxMap, 80);
+        this.map.addImage("pulsing-dot",dataImage(this.map.mapboxMap, 80));
+        this.map.addLayer({
+            id: 'layer-with-pulsing-dot',
+            type: 'symbol',
+            source: (sourse as any),
+            layout: {
+                'icon-image': 'pulsing-dot'
+            }
+        });
         this.cdr.detectChanges();
     }
 
